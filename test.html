@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Module tester</title>
+</head>
+<body>
+<style>
+body
+{
+    font-family: monospace;
+}
+table.test
+{
+    display:none;
+    /*position: absolute;*/
+    /*margin-left: 70px;*/
+    /*margin-top: 10px;*/
+    background: #EEE;
+    border: 1px solid #6A3E14;
+    z-index: 20;
+}
+ul li
+{
+    font-size: 11pt;
+}
+table.test > tr > td
+{
+    margin:5px;
+    background: #EDD;
+    padding:5px;
+}
+table.data
+{
+    border-collapse:collapse;
+    margin:5px;
+}
+table.data td
+{
+    border: 1px solid #6A3E14;
+    padding:4px;
+    text-align:center;
+    min-width:40px;
+}
+table.data tr:first-of-type
+{
+    background:#EBB;
+
+
+}
+table.data tr td:first-child
+{
+    background:#BEB;
+    /*border:1px solid black;*/
+}
+
+</style>
+<script>
+    var root = document.createElement("ul");
+    document.body.appendChild(root);
+    function Test(name)
+    {
+        var div = document.createElement("li");
+        root.appendChild(div);
+        //var cap = document.createElement("h1");
+        var tab = document.createElement("table");
+        div.innerHTML = name;
+        var show = false;
+        div.onclick = function(e) 
+        {
+            if(e.target.children[0] !== tab) return;
+            tab.style.display = show ? "none" : "block";
+            show = !show;
+        }
+        
+        //div.appendChild(cap);
+        div.appendChild(tab);
+        tab.className = "test";
+        this.tab = tab;
+        this.cols = {};
+    }
+    Test.prototype = {
+        showTableArray:function(data, comment)
+        {
+            function putTD(html, tr)
+            {
+                var td = document.createElement("td");
+                if(html !== undefined) td.innerHTML = html;
+                tr.appendChild(td);       
+            }
+            function findObject(v)
+            {
+                for(var t in data)
+                {
+                    var a = data[t].array;
+                    for(var r in a) if(v === a[r]) return t + "[" + r + "]";
+                }
+                return v;
+            }
+            var sp = document.createElement("tr");
+            this.tab.appendChild(sp);
+            if(comment) sp.innerHTML = comment;
+            for(var t in data)
+            {
+                var td = document.createElement("td");
+                var table = document.createElement("table");
+                table.className = "data";
+                sp.appendChild(td);
+                td.appendChild(table);
+                var cap = document.createElement("caption");
+                cap.innerHTML = t;
+                table.appendChild(cap);
+                if(!this.cols[t]) this.cols[t] = [];
+                var cols = this.cols[t];
+                var a = data[t].array;
+                for(var r in a) for(var c in a[r]) if(cols.indexOf(c) < 0) cols.push(c);
+                var tr = document.createElement("tr");
+                table.appendChild(tr);
+                putTD("№", tr);
+                for(var c in cols) putTD(cols[c], tr);
+                for(var r in a)
+                {
+                    tr = document.createElement("tr");
+                    table.appendChild(tr);
+                    putTD(r, tr);
+                    for(var c in cols)
+                    {
+                        var v = a[r][cols[c]];
+                        if(v && typeof v === "object")
+                        {
+                            if(v instanceof Array)
+                            {
+                                var rr = "[";
+                                for(var k in v) 
+                                {
+                                    if(rr !== "[") rr += ", ";
+                                    rr += findObject(v[k]);
+                                }
+                                v = rr + "]";
+                            } else
+                            v = findObject(v);
+                        }
+                        putTD(v, tr);
+                    }
+                }
+            }
+        }
+    }
+    function show(o, r)
+    {
+        if(!r)
+        {
+            r = document.createElement("pre");
+            root.appendChild(r);
+        }
+        var t = JSON.stringify(o, "", 4);//.replace(/\n/g, "<br>").replace(/ /g, "");// + "<br>";
+        //t.replace
+        r.innerHTML = t;
+    }
+
+</script>
+<script src="net.js"></script>
+<script src="net.test.js"></script>
+</body>
+</html>
+

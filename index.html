@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Graph editor</title>
+    <link rel="stylesheet" href="css/graph.css" media="screen">
+    <link rel="stylesheet" href="css/icons.css" media="screen">
+    <link id="CSS" rel="stylesheet" href="css/lite.css" media="screen">
+    <script type="text/javascript">
+        var require = function(){var m = {}; return function(name)
+            {
+                if(m[name]) return m[name];
+                var s = document.createElement('script');
+                s.src = name;
+                m[name] = s;
+                document.body.appendChild(s);
+            }}();
+    </script>
+</head>
+<body>
+    <input id="import" type="file" style="display:none" multiple>
+<!-- Канва -->
+    <canvas id='canvas'>Обновите браузер</canvas>
+    <canvas id='fast' style="z-index:2"></canvas>
+<!-- Главное меню -->
+    <menu type="toolbar" class="hmenu" id="mainmenu">
+        <li id="test"> &#2384;</li> 
+        <li id="menufile"> Проект </li>
+        <li id="menuedit"> Правка </li>
+        <li id="menuview"> Вид 
+            <ul>
+                <li> Тема 
+                    <ul>
+                        <li class="checked" onclick="setCSS('css/lite.css')"> Лёгкая </li>
+                        <li onclick="setCSS('css/matrix.css')"> Матрица </li>
+                    </ul>
+                </li> 
+            </ul>
+        </li>
+        <li id="menucreate"> Создать </li>
+    </menu>
+<!-- Панель инструментов -->
+	<div class="vmenu" id="toolbar">
+		<div id="icon-hand"></div>
+		<div id="icon-select"></div>
+		<div id="icon-move"></div>
+		<div id="icon-cancel" style="display:none"></div>
+	
+	</div>
+<!-- Серый экран -->
+    <div id='blocker' hidden="true"></div>
+<!-- Диалоги -->    
+    <script type="text/javascript">
+        function hideModal(id) {document.getElementById(id).hidden = true; document.getElementById("blocker").hidden = true;}
+        function showModal(id) {document.getElementById(id).hidden = false; document.getElementById("blocker").hidden = false;}
+        function comboClick(id)
+        {
+            var e = document.getElementById(id);
+            e.hidden = !e.hidden;
+            this;
+        }
+        function comboChange(src, dst)
+        {
+            document.getElementById(dst).value = document.getElementById(src).value;
+        }
+    </script>
+    <div id="savedialog" class="dialog" hidden="true" title="Введите имя">
+        <h1> Сохранить как </h1>
+        <div>
+            <div class="combobox">
+                <!--<button style="float:right" style="width:30" onclick="comboClick('savelist')">\/</button>-->
+                <select id="savelist" type="multiple" onchange="comboChange('savelist', 'savename')"></select>
+                <input id="savename" class="combobox" type="text" style="width:90%"> 
+            </div>
+            <br>
+            <input id="savelocal" type="checkbox" onchange="DB.OnSaveLocalChange()">Сохранить локально</input><br>  
+            <button onclick="DB.OnSaveButton()">Сохранить</button>
+            <button onclick="hideModal('savedialog')">Отмена</button>
+        </div>
+    </div>
+    <div id="loaddialog" class="dialog" hidden="true" title="Выберите имя">
+        <h1> Открыть </h1>
+        <div> 
+            Пользователь <select id="loaduser" type="multiple" onchange="DB.OnOpenUserChange()"></select><br>
+            <select multiple size="1" id="loadname" style="height:150px; width:250px;" ondblclick="DB.OnLoadButton()"></select><br>
+            <button onclick="DB.OnLoadButton()">Загрузить</button>
+            <button onclick="hideModal('loaddialog')">Отмена</button>
+        </div>
+    </div>
+    <div id="goutdialog" class="dialog" hidden="true">
+        <textarea id="goutarea"></textarea><br>
+        <button onclick="hideModal('goutdialog')">Закрыть</button>
+    </div>
+<!-- Скрипты -->
+<!--<script src="index.js"></script>-->
+
+<script src="core/utils.js"></script>
+<script src="core/storage.js"></script>
+<script src="core/css.js"></script>
+<script src="core/view.js"></script>
+<script src="core/controller.js"></script>
+<script src="core/editor.js"></script>
+<script src="core/grid.js"></script>
+<script src="core/navi.js"></script>
+<!--<script src="main.js"></script>-->
+
+<script src="ui/menu.js"></script>
+<script src="ui/dialogs.js"></script>
+<script src="ui/toolbar.js"></script>
+<!--<script src="ui.js"></script>-->
+
+
+<script src="geom/pnl.js"></script>
+<script src="geom/arrow.js"></script>
+<script src="geom/block.js"></script>
+<script src="geom/arcs.js"></script>
+<!-- <script src="geom.js"></script>-->
+
+<!--<script src="navi.js"></script>
+<script src="grid.js"></script>
+<script src="db.js"></script>-->
+
+<!--<script src="cnc.js"></script>
+<script src="debug.js"></script>
+
+<script src="electro/schematic.js"></script>
+<script src="electro/kicad.js"></script>
+<script src="electro/network.js"></script>
+
+<script src="avr/avr.js"></script>
+-->
+<script>//Main.Init()</script>
+</body>
+</html>
