@@ -64,7 +64,7 @@ Arc.prototype =
         this.Update();
         ctx.arc(this.cx, this.cy, this.R, this.a1, this.a2);
         ctx.stroke();
-        if((this._s & 2) || type > 0) this._P.draw(1);
+        if((this._s & 2) || type > 0) this._P.draw(ctx, 1);
     },
     hp:8,
     hit: function(x, y, adm)
@@ -128,7 +128,7 @@ Arc.prototype =
                 pt.x = x; 
                 pt.y = y;
             }
-            view.needFast = true;        
+            return true;        
         },
         leftup: function(x, y)
         {
@@ -146,7 +146,7 @@ Arc.prototype =
             view.needRedraw = true;
             view.needFast = true;
         },
-        rightup: function(){ctl.pop(); view.needFast = true;}
+        rightup: function(){ctl.pop(); return true;}
     };
     var pre =
     {

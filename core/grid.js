@@ -1,11 +1,11 @@
 "use strict";
 
-view.grid = new (function(view, editor)
+function Grid(view, editor)
 {
     var g = this;
     g.step = 10;
     g.style = "#808080";
-    function drawGrid(ctx)
+    g.draw = function(ctx)
     {
         var w = canvas.width, h = canvas.height;
         ctx.beginPath();
@@ -26,7 +26,6 @@ view.grid = new (function(view, editor)
         ctx.stroke();
         ctx.lineWidth = 1.0;
     }
-    view.insert(drawGrid, view.clear);
     editor.align = function(pos)
     {
         pos.x = Math.ceil(pos.x / g.step - 1) * g.step;
@@ -58,7 +57,7 @@ view.grid = new (function(view, editor)
         _3:{label: "Убрать"},
         _4:{label: "Параметры"}
     }}});
-})(view, editor);
+};
 
 
 /*Main.Clear = Grid.draw;

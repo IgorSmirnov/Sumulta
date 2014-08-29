@@ -173,7 +173,7 @@ Line.prototype =
                 pt.x = x; 
                 pt.y = y;
             }
-            view.needFast = true;
+            return true;
         },
         leftup: function(x, y)
         {
@@ -189,9 +189,8 @@ Line.prototype =
             pt = new Pt(x, y); // Создаём вторую точку
             obj = new ctor(point, pt);
             view.needRedraw = true;
-            view.needFast = true;
         },
-        rightup: function(){ctl.pop(); view.needFast = true;}
+        rightup: function() {ctl.pop(); return true;}
     };
     var pre =
     {

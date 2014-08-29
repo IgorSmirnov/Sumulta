@@ -25,8 +25,7 @@ function Controller(view)
     {
         if(!method) return;
         var mp = getMousePos(px, py);
-        method(mp.x, mp.y);
-        view.commit(state);
+        if(method(mp.x, mp.y)) view.commit(state);
     }
     var mouseDown = null;
     canvas.onmousedown = function(evt)
@@ -77,8 +76,7 @@ function Controller(view)
         var e = /*window.event ||*/ evt; // old IE support
         e.preventDefault();
         var delta = e.wheelDelta || -e.detail;
-        state.wheel(mp.x, mp.y, delta);
-        view.commit(state);
+        if(state.wheel(mp.x, mp.y, delta)) view.commit(state);
     }
     if(canvas.addEventListener) 
     {

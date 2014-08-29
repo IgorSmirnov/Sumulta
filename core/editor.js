@@ -8,11 +8,52 @@ function Editor(storage, view, ctl)
     var selRect = null;
     var ed = this;
     var adm = 3;
+    
+    ed.draw = function(ctx)
+    {
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        
+        var items = storage.active;
+        
+        var md = true;
+        var selected = [];
+        var touched = [];
+        var err = [];
+        var mo = ed.mo;
+        for(var x in items)
+        {
+            var f = items[x];
+            if(f === mo) {((f._s & 2) ? selected : touched).push(f); md = false; continue;}
+            if(f._s & 2) {selected.push(f); continue;}
+            //if(selRect && f.RHit && f.RHit(left, top, right, bottom)) 
+            if(f._s & 1) {touched.push(f); continue;}
+            
+            try {f.draw(ctx, 0);} 
+            catch(e) {if(items[x]) err.push("#" + x + " " + items[x].constructor.name); items[x] = null;}
+        }
+        for(var x in selected)
+        {
+            try {selected[x].draw(ctx, 2);} 
+            catch(e) {if(selected[x]) err.push("#" + x + " " + selected[x].constructor.name); /*Items[x] = null;*/}
+        }
+        for(var x in touched)
+        {
+            try {touched[x].draw(ctx, 1);} 
+            catch(e) {if(touched[x]) err.push("#" + x + " " + touched[x].constructor.name); /*Items[x] = null;*/}
+        }        
+        if(md && mo) mo.draw(ctx, 1);
+        if(err.length > 0)
+        {
+            var y = 0;
+            for(var x in items) if(items[x]) items[y++] = items[x];
+            items.length = y;
+            alert("Ошибка отрисовки объектов: \n" + err.join("\n"));
+        }
+    };
     function onFreeMove(mx, my) // Свободное движение мыши
     {
-        var mo = null;
-        var hp = 0; // Hit priority
-        var a = adm / view.scale
+        var mo = null, hp = 0, a = adm / view.scale
         for(var x = items.length; x--;)
         {
             if(hp && (!items[x].hp || items[x].hp < hp)) continue;
@@ -22,115 +63,13 @@ function Editor(storage, view, ctl)
         if(ed.mo != mo) 
         {
             if(ed.mo) ed.mo._s &= ~1;
-            ed.mo = mo; view.needRedraw = true;
+            ed.mo = mo;
+            view.needRedraw = true;
             if(mo) mo._s |= 1;
+            return true;
         }
-    }
-    ed.align = function(pos)
-    {
-    
-    };
-    /*function onObjOnlyMove(mx, my) // Движение с привязкой к объектам
-    {
-        var mo = null;
-        hitPriority = 100;
-        for(var x = items.length; x--;)
-        {
-            var t = items[x].hit(mx, my);
-            if(t) mo = t;
-        }
-        if(Main.EveryRedraw || ed.mo != mo) {ed.mo = mo; view.needRedraw = true;}
-    }*/
-    function onLeftUp(mx, my)
-    {
-        if(selRect)
-        {
-            if(selRect.w == 0 && selRect.h == 0)
-            {
-                var mo = ed.mo;
-                if(mo)
-                {
-                    var s = mo._s;
-                    (s & 2) ? s &= ~2 : s |= 2;
-                    if(mo.onSel) mo.onSel(s);
-                    mo._s = s;
-                }
-                else for(var x in items) if(items[x]._s & 2)
-                {
-                    if(items[x].onSel) items[x].onSel(0);
-                    items[x]._s = 0;
-                }
-            } 
-            else
-            {
-                var left = selRect.left();
-                var top = selRect.top();
-                var right = selRect.right();
-                var bottom = selRect.bottom();
-
-                for(var x in items)
-                {
-                    var s = items[x]._s;
-                    if(s & 1)//if(items[x].rHit && items[x].rHit(left, top, right, bottom))
-                    {
-                        if(items[x].onSel && !(s & 2)) items[x].onSel(true);
-                        s |= 2; s &= ~1;
-                        items[x]._s = s;
-                    }
-                }
-            }
-        }
-
-        selRect = null;
-        ctl.pop();
-        view.needFast = true;
-        view.needRedraw = true;
     }
     var MX, MY;
-    function onObjOnlyMove(mx, my) // Перемещение объектов с левой кнопкой
-    {
-        var dx = mx - MX;
-        var dy = my - MY;
-        MX = mx;
-        MY = my;
-        var mo = ed.mo;
-        for(var x in items) if((items[x]._s & 2) && items[x].moveBy) items[x].moveBy(dx, dy);
-        if(mo && !(mo._s & 2) && mo.moveBy)
-            mo.moveBy(dx, dy);
-        for(var x in items) items[x]._s &= 3;
-        if(mo) mo._s &= 3;
-        view.needRedraw = true;
-    }
-    function onObjMove(mx, my)
-    {
-        if(!(ed.mo._s & 2))
-        {
-            for(var x in items) items[x]._s &= ~2;
-            ed.mo._s |= 2;
-        }
-    	onObjOnlyMove(mx, my);
-    }
-    function onSelMove(x, y) // Перемещение рамки выделения
-    {
-        selRect.w = x - selRect.x;
-        selRect.h = y - selRect.y;
-        var left = selRect.left(), top = selRect.top(), right = selRect.right(), bottom = selRect.bottom();
-        var items = storage.active;
-        for(var t in items)
-        {
-            var i = items[t];
-            if(i.rHit)
-            {
-                var h = i.rHit(left, top, right, bottom);
-                if(h === !(i._s & 1))
-                {
-                    view.needRedraw = true;
-                    h ? i._s |= 1 : i._s &= ~1;
-                }
-            }
-        }
-        view.needFast = true;
-    }
     function SimpleRect(x, y, w, h)
     {
         this.x = x;
@@ -141,31 +80,126 @@ function Editor(storage, view, ctl)
         this.top = function() {return this.h > 0 ? this.y : this.y + this.h;};
         this.right = function() {return this.w < 0 ? this.x : this.x + this.w;};
         this.bottom = function() {return this.h < 0 ? this.y : this.y + this.h;};
-        this.stroke = function(ctx) {ctx.strokeRect(this.x, this.y, this.w, this.h);};
+        this.stroke = function(ctx) {ctx.strokeStyle = "#8080FF"; ctx.strokeRect(this.x, this.y, this.w, this.h);};
     }
-    function draw(ctx)
+    var objmove = // Перемещение мышью выделенных объектов 
     {
-        if(selRect)
+        move: function(mx, my)
         {
-            ctx.strokeStyle = "#8080FF";
-            selRect.stroke(ctx);
-        }    
-    }
+            var dx = mx - MX;
+            var dy = my - MY;
+            MX = mx;
+            MY = my;
+            var mo = ed.mo;
+            for(var x in items) if((items[x]._s & 2) && items[x].moveBy) items[x].moveBy(dx, dy);
+            if(mo && !(mo._s & 2) && mo.moveBy)
+                mo.moveBy(dx, dy);
+            for(var x in items) items[x]._s &= 3;
+            if(mo) mo._s &= 3;
+            return view.needRedraw = true;
+        },
+        leftup: ctl.pop    
+    };
+    var modown = // Мышь наведена на объект и нажата левая кнопка
+    {
+        move: function(mx, my)
+        {
+            if(!(ed.mo._s & 2))
+            {
+                for(var x in items) items[x]._s &= ~2; // Сбрасываем выделение
+                ed.mo._s |= 2; // Выделяем объект
+            }
+            ctl.go(objmove);
+            return objmove.move(mx, my);
+        }, 
+        leftup: function(mx, my)
+        {
+            ctl.pop();
+            var mo = ed.mo;
+            (mo._s & 2) ? (mo._s &= ~2) : (mo._s |= 2);
+            view.needRedraw = true;
+            return true;
+        }
+    };
+    var selmove = // Перемещение рамки выделения
+    {
+        move: function(x, y) 
+        {
+            selRect.w = x - selRect.x;
+            selRect.h = y - selRect.y;
+            var left = selRect.left(), top = selRect.top(), right = selRect.right(), bottom = selRect.bottom();
+            var items = storage.active;
+            for(var t in items)
+            {
+                var i = items[t];
+                if(i.rHit)
+                {
+                    var h = i.rHit(left, top, right, bottom);
+                    if(h === !(i._s & 1))
+                    {
+                        view.needRedraw = true;
+                        h ? i._s |= 1 : i._s &= ~1;
+                    }
+                }
+            }
+            return true;
+        }, 
+        leftup: function()           
+        {
+            for(var x in items)
+            {
+                var s = items[x]._s;
+                if(s & 1)
+                {
+                    if(items[x].onSel && !(s & 2)) items[x].onSel(true);
+                    s |= 2; s &= ~1;
+                    items[x]._s = s;
+                }
+            }
+            ctl.pop();
+            view.needRedraw = true;
+            return true;
+        },
+        draw: function(ctx) {selRect.stroke(ctx);}
+    };
+    var seldown = // Мышь наведена на пустое место и нажата левая кнопка
+    {
+        move: function(x, y)
+        {
+            ctl.go(selmove);
+            return selmove.move(x, y)
+        },
+        leftup: function(mx, my)
+        {
+            for(var x in items) if(items[x]._s & 2)
+            {
+                if(items[x].onSel) items[x].onSel(0);
+                items[x]._s = 0;
+                view.needRedraw = true;
+            }
+            ctl.pop();
+            return true;
+        }
+    };
+
     var states = 
     { // Состояния
-        free:
+        free: // Свободное состояние
         {
-            draw: draw,
+            //draw: function(ctx) {var mo = ed.mo; if(mo) mo.draw(ctx, mo._s & 3);},
             move: onFreeMove,
             leftdown: function(x, y) 
-            {/*Main.MX = x; Main.MY = y;*/ 
-                selRect = new SimpleRect(x, y, 0, 0); 
+            {
                 if(ed.mo)
                 {
                     MX = x; MY = y;
-                    ctl.call(states.objmove);
+                    ctl.call(modown);
                 }
-                else ctl.call(states.selmove);
+                else 
+                {
+                    selRect = new SimpleRect(x, y, 0, 0); 
+                    ctl.call(seldown);
+                }
             },
             dblclick:function(x, y) {var mo = ed.mo; if(mo && mo.onDblClick) mo.onDblClick(x, y);},
             select:function() {ctl.call(states.select);},
@@ -187,12 +221,12 @@ function Editor(storage, view, ctl)
             select:function() {ctl.go(states.select);},
             _leave: function() {CToolbar.move.check(false);}
         },
-        selmove:{move:onSelMove, leftup: onLeftUp},
-        objmove:{move: onObjMove, leftup: onLeftUp},
-        objonlymove:{move: onObjOnlyMove, leftup:ctl.pop}
     };
     ctl.states = states;
     ctl.go(states.free);
+    view.needRedraw = true;
+    view.commit(states.free);
+    
     
     function deleteAll()
     {
@@ -218,12 +252,5 @@ function Editor(storage, view, ctl)
         view.commit();
     }
 }
-
-var view = new View(document.getElementById("canvas"), document.getElementById("fast"));
-var ctl = new Controller(view);
-var editor = new Editor(storage, view, ctl);
-
-
-
 
 

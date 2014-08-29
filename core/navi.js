@@ -1,6 +1,6 @@
 "use strict";
 
-(function(view, ctl)
+function Navi(view, ctl)
 {
     var MX, MY;
     function onMove(mx, my)
@@ -8,6 +8,7 @@
         view.offsetX += mx * view.scale - MX;
         view.offsetY += my * view.scale - MY;
         view.transform();
+        return true;
     }
     function onMouseWheel(x, y, delta)
     {
@@ -16,11 +17,11 @@
         var m = 1.2;
         if(delta < 0) m = 1.0 / m;  	
         view.scale *= m;
-        //Main.adm /= m;
         OScale -= view.scale;
         view.offsetX += x * OScale;
         view.offsetY += y * OScale;
         view.transform();
+        return true;
     }
     var states = ctl.states, navi = {move: onMove, rightup: ctl.pop, leftup:ctl.pop};
     states.navi = navi;
@@ -48,5 +49,5 @@
         states.select.hand = function() {ctl.goto(hand);};
         states.onlymove.hand = function() {ctl.goto(hand);};
     }
-})(view, ctl);
+}
 
