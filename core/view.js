@@ -2,18 +2,13 @@
 // Работа с канвой, отрисовкой и масштабированием
 function View(canvas, fast)
 {
-    this.scale = 1.0;
-    this.offsetX = 0.0;
-    this.offsetY = 0.0;
-
-    this.canvas = fast ? fast : canvas;
-    var ctx = canvas.getContext('2d'), fctx = fast.getContext('2d');
-    /*var h = canvas.clientHeight, w = canvas.clientWidth;
-    canvas.height = h;
-    canvas.width = w;
-    fast.height = h; 
-    fast.width = w;*/
     var v = this;
+    v.scale = 1.0;
+    v.offsetX = 0.0;
+    v.offsetY = 0.0;
+
+    v.canvas = fast ? fast : canvas;
+    var ctx = canvas.getContext('2d'), fctx = fast.getContext('2d');
     v.onresize = function(state)
     {
         var h = canvas.clientHeight, w = canvas.clientWidth;
@@ -54,8 +49,6 @@ function View(canvas, fast)
     {
         ctx.clearRect(-v.offsetX / v.scale, -v.offsetY / v.scale, canvas.width / v.scale, canvas.height / v.scale);
     };
-    //v.insert(v.clear);
-    //v.insert(v.draw);
     v.transform = function()
     {
         ctx.setTransform(v.scale, 0, 0, v.scale, v.offsetX, v.offsetY);
