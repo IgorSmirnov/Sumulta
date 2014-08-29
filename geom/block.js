@@ -2,7 +2,7 @@
 
 function Block(r)//x, y, w, h, Text)
 {
-    this.setFontSize(ctx, 10);
+    //this.setFontSize(ctx, 10);
     for(x in r) if(r.hasOwnProperty(x)) this[x] = r[x];
     this._P = [
         {
@@ -75,12 +75,12 @@ Block.prototype =
 	for(var x in this) if(this.hasOwnProperty(x) && x.charAt(0) !== '_') r[x] = this[x];
 	return r;		
     },
-    hit: function(x, y)
+    hit: function(x, y, adm)
     {
         for(var i = this._P.length - 1; i >= 0; i--)
         {
             var p = this._P[i].pos();
-            if(Math.abs(p.x - x) < 3 && Math.abs(p.y - y) < 3)
+            if(Math.abs(p.x - x) < adm && Math.abs(p.y - y) < adm)
                 return this._P[i];
         }
        
@@ -248,12 +248,14 @@ Block.prototype =
         draw:function(ctx) {obj.draw(ctx, 1);},
         move: function(x, y)
         {
-            if(Main.PointAlign) Main.OnAlignedMove(x, y); else Main.OnFreeMove(x, y);
+            //if(editor.pointAlign) Main.OnAlignedMove(x, y); else Main.
+            onFreeMove(x, y);
             if(obj.x + obj.w != x || obj.y + obj.h != y)
             {
                 //Main.NeedRedraw = true;
                 obj.w = x - obj.x;
                 obj.h = y - obj.y;
+                view.needFast = true;
             }
         },
         leftup: function(x, y)
@@ -262,6 +264,12 @@ Block.prototype =
             if(obj.h < 0) { obj.y += obj.h; obj.h = -obj.h;}
             items.push(obj);
             ctl.pop();
+        },
+        rightup: function()
+        {
+            ctl.pop();
+            view.needRedraw = true;            
+            view.needFast = true;
         }
     };
     var pre =

@@ -15,7 +15,7 @@ function Editor(storage, view, ctl)
         var a = adm / view.scale
         for(var x = items.length; x--;)
         {
-            if(!items[x].hp || items[x].hp < hp) continue;
+            if(hp && (!items[x].hp || items[x].hp < hp)) continue;
             var t = items[x].hit(mx, my, a);
             if(t) {mo = t; hp = t.hp;}
         }
