@@ -1,0 +1,21 @@
+{
+    "name": "sumulta",
+    "description": "",
+    "version": "0.1.0",
+    "author": "igor",
+    "scripts": { "start": "node app.js"},
+    "dependencies": {
+        "require-tree":"*",
+        "mongoose":"*",
+        "express":"*",
+        "body-parser":"*",
+        "cookie-parser":"*",
+        "express-session":"*",
+        "passport":"*",
+        "passport-local":"*",
+        "winston":"*",
+        "nconf":"*",
+        "colors":"*"
+    },
+    "devDependencies": {}
+}

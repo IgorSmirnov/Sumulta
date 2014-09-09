@@ -1,0 +1,10 @@
+{
+	"express":
+	{
+		"port": 8000
+	},
+	"mongoose":
+	{
+		"url": "mongodb://localhost/sumulta"
+	}
+}
