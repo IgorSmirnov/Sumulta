@@ -1,10 +1,11 @@
 {
 	"express":
 	{
-		"port": 8000
+		"port": 80
 	},
 	"mongoose":
 	{
 		"url": "mongodb://localhost/sumulta"
-	}
+	},
+	"get_static": true
 }

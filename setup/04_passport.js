@@ -3,7 +3,7 @@
 var passport 		= require('passport');
 var LocalStrategy 	= require('passport-local');
 var User			= require('mongoose').model('user');
-var hash 			= require('../users/hash');
+var hash 			= require('../controllers/users/hash');
 var log             = require('winston');
 
 passport.use(new LocalStrategy(
