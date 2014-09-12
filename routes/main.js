@@ -9,7 +9,14 @@ var fs           = require('fs');
 
 module.exports = function(app)
 {
-    app.get('/', controllers.render('index', {scripts: controllers.readdir('./js/core/')}));
+
+    app.get('/', controllers.render('index', {scripts: ['./js/core.js']}));
+    app.get('/debug', controllers.render('index', {scripts: controllers.readdir('./js/core/')}));
+
+
+    app.get('/admin', controllers.render('admin'));
+    app.post('/admin/rebuild', controllers.rebuild);
+
     // Users API
     //app.post  ('/api/register',     require('../users/register'));
     //app.post  ('/api/login',        require('../users/login'));

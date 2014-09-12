@@ -1,23 +1,9 @@
 "use strict";
 
-function getXmlHttp()
-{
-	if(window.XMLHttpRequest) return new XMLHttpRequest();
-    var xmlhttp;
-    try {
-        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-    } catch (e) {
-        try {
-          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        } catch (E) {xmlhttp = false;}
-    }
-    return xmlhttp;
-}
-
 var DB =
 {
     HTTP:null,
-    DBName:"GraphDB",
+    DBName:"sumulta",
     LastName:null,
     LastUser:null,
     LastLocal:true,

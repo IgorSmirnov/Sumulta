@@ -4,7 +4,7 @@ var css =
     sel: "#F00",
     touch: "#888",
     back: "#FFF",
-    font: '10px monospace',
+    font: '10px monospace'
 }
 
 function setCSS(f)

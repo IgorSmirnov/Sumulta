@@ -211,7 +211,7 @@ function Editor(storage, view, ctl)
             leftdown: function(x, y) {/*Main.MX = x; Main.MY = y; */selRect = new SimpleRect(x, y, 0, 0);ctl.call(states.selmove);},
             select: ctl.pop,
             onlymove:function() {ctl.go(states.onlymove);},        
-            _leave:function() {CToolbar.select.check(false);},
+            _leave:function() {CToolbar.select.check(false);}
         },
         onlymove:
         {
@@ -220,7 +220,7 @@ function Editor(storage, view, ctl)
             onlymove: ctl.pop,
             select:function() {ctl.go(states.select);},
             _leave: function() {CToolbar.move.check(false);}
-        },
+        }
     };
     ctl.states = states;
     ctl.go(states.free);

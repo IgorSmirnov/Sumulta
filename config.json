@@ -7,5 +7,9 @@
 	{
 		"url": "mongodb://localhost/sumulta"
 	},
+	"closure":
+	{
+		"command": "\"C:/Program Files (x86)/Java/jre7/bin/java\" -jar c:/www/compiler.jar"
+	},
 	"get_static": true
 }

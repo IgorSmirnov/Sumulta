@@ -41,12 +41,12 @@ function Navi(view, ctl)
             leftdown:states.free.rightdown,
             hand: ctl.pop,
             _leave:function() {CToolbar.hand.check(false);},
-            select:function() {ctl.goto(states.select);},
-            onlymove:function() {ctl.goto(states.onlymove);}                	    
+            select:function() {ctl.go(states.select);},
+            onlymove:function() {ctl.go(states.onlymove);}                	    
         };
         states.hand = hand;
         states.free.hand = function() {ctl.call(hand);};
-        states.select.hand = function() {ctl.goto(hand);};
+        states.select.hand = function() {ctl.go(hand);};
         states.onlymove.hand = function() {ctl.goto(hand);};
     }
 }

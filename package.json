@@ -16,7 +16,6 @@
         "winston":"*",
         "nconf":"*",
         "colors":"*",
-        "mocha":"*",
 	    "jade":"*"
     },
     "devDependencies": {}
