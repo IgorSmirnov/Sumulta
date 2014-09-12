@@ -5,10 +5,11 @@ var config       = require('nconf');
 var log          = require('winston');
 var requireTree  = require('require-tree');
 var controllers  = requireTree('../controllers');
+var fs           = require('fs');
 
 module.exports = function(app)
 {
-    app.get('/', controllers.render('index'));
+    app.get('/', controllers.render('index', {scripts: controllers.readdir('./js/core/')}));
     // Users API
     //app.post  ('/api/register',     require('../users/register'));
     //app.post  ('/api/login',        require('../users/login'));

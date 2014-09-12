@@ -1,8 +1,7 @@
 extends layout
 
 block content
-  //h1 Public Page
-  //p Welcome to Public page
-  //a(href='private') this is private page. You can try to open it.
   include menu
-  //include parts/register
+  include canvas
+  - for(var x in scripts)
+    script(src=scripts[x])
