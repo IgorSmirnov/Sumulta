@@ -1,14 +1,16 @@
 'use strict';
 
-var log    = require('winston');
-var config = require('nconf');
-var exec   = require('child_process').exec;
+var log     = require('winston');
+var config  = require('nconf');
+var exec    = require('child_process').exec;
+var readdir = require('./readdir');
 
 module.exports = function(req, res, next)
 {
 	log.info('Rebuild started');
 	var closure = config.get('closure:command');
-	var query = closure + ' --js js/core/*.js --js_output_file js/core.js';
+	var coreFiles = readdir('./js/core/').join(' ');
+	var query = closure + ' --js ' + coreFiles + ' --js_output_file js/core.js';
 	log.info(query);
 	exec(query, {encoding: 'binary'},
 		function (error, stdout, stderr) 

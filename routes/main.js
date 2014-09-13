@@ -40,8 +40,10 @@ module.exports = function(app)
 
     if(config.get('get_static'))
     {
-        app.use('/js/',  express.static("./js/"));
-        app.use('/css/', express.static("./css/"));
+        app.use('/js/',  express.static('./js/'));
+        app.use('/css/', express.static('./css/'));
+
+        app.use('/admin/test', express.static('./test/client'))
     }
 
     app.use(function(req, res, next)

@@ -47,7 +47,7 @@ function Navi(view, ctl)
         states.hand = hand;
         states.free.hand = function() {ctl.call(hand);};
         states.select.hand = function() {ctl.go(hand);};
-        states.onlymove.hand = function() {ctl.goto(hand);};
+        states.onlymove.hand = function() {ctl.go(hand);};
     }
 }
 

@@ -49,14 +49,20 @@ function Grid(view, editor)
         }
 
     },*/
-    if(typeof CMenu !== "undefined") CMenu.Add(
+    if(typeof ui !== "undefined")
     {
-        view:{grid: {label: "Линейка", 
+        ui.add('view/grid/lines', function(){});
+        ui.add('view/grid/dots', function(){});
+        ui.add('view/grid/none', function(){});
+        ui.add('view/grid/params', function(){});
+
+
+        /*view:{grid: {label: "Линейка", 
         _1:{label: "Решётка"},
         _2:{label: "Точки"},
         _3:{label: "Убрать"},
-        _4:{label: "Параметры"}
-    }}});
+        _4:{label: "Параметры"}*/
+    }//}});
 };
 
 

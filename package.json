@@ -18,5 +18,8 @@
         "colors":"*",
 	    "jade":"*"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "chai":"*",
+        "mocha":"*"
+    }
 }

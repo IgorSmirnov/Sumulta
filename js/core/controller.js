@@ -1,6 +1,6 @@
 "use strict";
 // Обработка событий, машина состояний
-function Controller(view)
+function Controller(view, window)
 {
     document.oncontextmenu = function (){return false;};
     var canvas = view.canvas;
@@ -120,8 +120,8 @@ function Controller(view)
     };
     this.pop = function()
     {
+        if(stack.length == 0) throw Error("Controller.pop() stack overrun!");
     	if(state._leave) state._leave();
-        if(stack.length == 0) throw "ctl.pop() stack overrun!";
         state = stack.pop();
     };
 
