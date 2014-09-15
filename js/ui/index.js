@@ -6,10 +6,10 @@ var ui = new (function UI()
 
 
 	}
-	this.add = function(path, func)
+	function add(path, func)
 	{
-		var a = path.split('/');
-		var i = ui;
+        	var a = path.split('/');
+		var i = this;
 		for(var x in a)
 		{
 			var t = i[a[x]];
@@ -17,8 +17,14 @@ var ui = new (function UI()
 			i = t;
 		}
 		if(func) i.exec = func;
+                return i;
 	};
-	this.setTree = function(tree)
+        ui.add = add;
+        UItem.prototype =
+        {
+            add: add
+        };
+	ui.setTree = function(tree)
 	{
 
 

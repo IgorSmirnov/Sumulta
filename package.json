@@ -16,7 +16,7 @@
         "winston":"*",
         "nconf":"*",
         "colors":"*",
-	    "jade":"*"
+	"jade":"*"
     },
     "devDependencies": {
         "chai":"*",

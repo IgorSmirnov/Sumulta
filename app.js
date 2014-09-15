@@ -31,5 +31,5 @@ for(var x in routes) routes[x](app);
 var port = config.get('express:port');
 app.listen(port, function()
 {
-	log.info('Application listen port', port);
+    log.info('Application listen port', port);
 });

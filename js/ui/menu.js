@@ -1,6 +1,12 @@
 "use strict";
 
-var CMenu =
+function Menu(doc)
+{
+
+
+}
+
+/*var CMenu =
 {
     Root:null,
     Add:function(o, r)
@@ -45,4 +51,4 @@ var CMenu =
 
 };
 
-CMenu.Root = document.getElementById("mainmenu");
+CMenu.Root = document.getElementById("mainmenu");*/

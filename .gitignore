@@ -1,5 +1,3 @@
 .nide
 node_modules
 js/core.js
-test/client/chai.js
-test/client/mocha.*

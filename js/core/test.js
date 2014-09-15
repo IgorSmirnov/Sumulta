@@ -28,27 +28,20 @@ var canvas = new TestCanvas();
 var fast = new TestCanvas();
 
 describe('Core', function(){
-	var view = new View(canvas, fast);
-	var win = {};
 	describe('View', function(){
-    	it('expected initial state', function(){
-    		//view
-    		chai.expect(view.scale).to.equal(1.0);
-    		chai.expect(view.offsetX).to.equal(0.0);
-    		chai.expect(view.offsetY).to.equal(0.0);
-    	});
-
-    	it('should return the index when present', function(){
-
-    	})
+    		it('expected initial state', function(){
+			var view = new View(canvas, fast);
+			chai.expect(view.scale).to.equal(1.0);
+			chai.expect(view.offsetX).to.equal(0.0);
+			chai.expect(view.offsetY).to.equal(0.0);
+    		});
   	});
   	describe('Controller', function()
   	{
 		var view = new View(canvas, fast);
 		var win = {};
   		var ctl = new Controller(view, win);
-  		it('expected initial state', function()
-  		{
+  		it('expected initial state', function(){
   			var error;
   			try {
   				ctl.pop();
@@ -56,8 +49,7 @@ describe('Core', function(){
   			} catch(e){ chai.expect(e).to.be.a('object'); error = true;}
   			chai.expect(error).to.ok;
   		});
-  		it('mouse button down', function()
-  		{
+  		it('mouse button down', function(){
   			var mx = null, my = null;
   			ctl.go({leftdown: function(x, y){mx = x; my = y}});
   			fast.onmousedown({pageX: 200, pageY: 300, button: 0});
