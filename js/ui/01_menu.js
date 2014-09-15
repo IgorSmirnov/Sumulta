@@ -1,11 +1,32 @@
 "use strict";
 
-function Menu(doc)
+var Menu = (function()
 {
-
-
-}
-
+    var menu = null;
+    return function(name)
+    {
+        return function(doc, ui, parent, nm)
+        {
+            if(!menu) 
+            {
+                menu = doc.createElement('menu'); 
+                menu.className = 'hmenu';
+                doc.body.appendChild(menu);
+            }
+            if(!ui._menu) ui._menu = doc.createElement('li');
+            if(parent._menu)
+            {
+                var m = parent._menu, ul;
+                if(m.children.length) ul = m.children[0];
+                else {ul = doc.createElement('ul'); m.appendChild(ul);}
+                ul.appendChild(ui._menu);
+            }
+            else menu.appendChild(ui._menu);
+            ui._menu.innerText = nm || name;
+            if(ui.exec) ui._menu.onclick = ui.exec;
+        }
+    }
+})();
 /*var CMenu =
 {
     Root:null,
