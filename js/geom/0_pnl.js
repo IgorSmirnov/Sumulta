@@ -119,20 +119,20 @@ Line.prototype =
     },
     setP2: function(P)
     {
-        RemoveFromArray(this.p2._der, this);
+        rfa(this.p2._der, this);
         this.p2 = P;
-        PushDer(P, this);
+        pd(P, this);
     },
     setP1: function(P)
     {
-        RemoveFromArray(this.p1._der, this);
+        rfa(this.p1._der, this);
         this.p1 = P;
-        PushDer(P, this);
+        pd(P, this);
     },   
     del: function()
     {
-        RemoveFromArray(this.p1._der, this);
-        RemoveFromArray(this.p2._der, this);
+        rfa(this.p1._der, this);
+        rfa(this.p2._der, this);
     },
     vec: function(p)
     {

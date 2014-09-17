@@ -106,6 +106,13 @@ Arrow.prototype =
         }
         return null;
     },
+    rHit: function(l, t, r, b) {
+        for(var x in this.ps) {
+            var p = this.ps[x].pos();
+            if(p.x < l || p.y < t || p.x > r || p.y > b) return false;
+        }
+        return true;
+    },
     GetPSel: function() 
     {
         if(this._s & 2) return true;
