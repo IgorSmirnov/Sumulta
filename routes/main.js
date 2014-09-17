@@ -11,8 +11,7 @@ module.exports = function(app)
 {
 
     app.get('/', controllers.render('index', {scripts: ['./js/core.js']}));
-    app.get('/debug', controllers.render('index', {scripts: controllers.readdir('./js/ui/', './js/lang/ru.js', './js/core/')}));
-
+    app.get('/debug', controllers.render('index', {scripts: controllers.readdir('./js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
     app.get('/admin', controllers.render('admin'));
     app.post('/admin/rebuild', controllers.rebuild);
 

@@ -255,7 +255,7 @@ Block.prototype =
                 //Main.NeedRedraw = true;
                 obj.w = x - obj.x;
                 obj.h = y - obj.y;
-                view.needFast = true;
+                return true;
             }
         },
         leftup: function(x, y)
@@ -269,7 +269,7 @@ Block.prototype =
         {
             ctl.pop();
             view.needRedraw = true;            
-            view.needFast = true;
+            return true;
         }
     };
     var pre =
@@ -289,5 +289,5 @@ Block.prototype =
         rightup: ctl.pop
     };
 
-    CMenu.Add({create:{_: {label: "Блок", click: function() {ctl.call(pre);}}}});
+    ui('create/block', function() {ctl.call(pre);});
 })(storage, ctl, editor, view);

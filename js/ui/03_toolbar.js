@@ -1,5 +1,9 @@
-var CToolbar = function()
+'use strict';
+
+function Toolbar(ui, doc)
 {
+    var bar = null, Item = ui.Item;
+
 	function ToolButton(name)
 	{
 		this.e = document.getElementById("icon-" + name); 
@@ -22,8 +26,24 @@ var CToolbar = function()
 		move: new ToolButton("move"),
 		cancel: new ToolButton("cancel")
 	};
-}();
-
+    function makeToolbar() {
+        if(!bar)
+        {
+            bar = createChild('menu');
+            menu.className = 'hmenu';
+        }
+        if(arguments.length) for(var x in arguments)
+        {
+            var a = arguments[x];
+            if(!this[a]) this[a] = new Item(this);
+            make(this[a], menu);
+        }
+	else make(this, menu);
+    }
+    Item.prototype.makeMenu = makeMenu;
+    ui.makeMenu = makeMenu;
+};
+/*
 CToolbar.cancel.e.onclick = function()
 {
 	if(State.rightup)
@@ -48,4 +68,4 @@ CToolbar.hand.e.onclick = function()
 CToolbar.move.e.onclick = function()
 {
 	if(State.onlymove) State.onlymove();
-};
+};*/

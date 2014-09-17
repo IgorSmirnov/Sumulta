@@ -1,2 +1,5 @@
-﻿ui.makeMenu('project', 'edit', 'view');
-//ui.makeToolbar('basic', 'edit');
+﻿ui.makeMenu('project', 'edit', 'view', 'create');
+ui.makeToolbar('basic', 'edit');
+
+//		<div id="icon-hand"></div>
+

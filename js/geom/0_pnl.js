@@ -211,5 +211,5 @@ Line.prototype =
     	ctl.call(pre);
     	if(typeof CToolbar !== "undefined") CToolbar.cancel.show(true);
     }
-    CMenu.Add({create:{_: {label: "Линию", click: onCreate}}});
+    ui('create/line', onCreate);
 })(storage, ctl, editor, view);

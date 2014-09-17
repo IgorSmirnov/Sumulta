@@ -20,5 +20,11 @@ ui.load({
 			none:   'None',
 			props:  'Settings ...'
 		}
-	}
+	},
+    create: {_: 'Create',
+        line:  'Line',
+        arc:   'Arc',
+        arrow: 'Arrow',
+        block: 'Block'
+    }     
 });

@@ -144,7 +144,7 @@ Arc.prototype =
             pt = new Pt(x, y); // Создаём вторую точку
             obj = new ctor(point, pt);
             view.needRedraw = true;
-            view.needFast = true;
+            return true;
         },
         rightup: function(){ctl.pop(); return true;}
     };
@@ -162,5 +162,5 @@ Arc.prototype =
         },
         rightup: ctl.pop
     };
-    CMenu.Add({create:{_: {label: "Дугу", click: function() {ctl.call(pre);}}}});
+    ui('create/arc', function() {ctl.call(pre);});
 })(storage, ctl, editor, view);

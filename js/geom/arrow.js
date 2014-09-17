@@ -155,7 +155,7 @@ Arrow.prototype =
                 pt.x = x; 
                 pt.y = y;
             }
-            view.needFast = true;
+            return true;
         },
         leftup: function(x, y)
         {
@@ -180,8 +180,8 @@ Arrow.prototype =
             obj = null;
             pt = null;
             ctl.pop();
-            view.needRedraw = true;            
-            view.needFast = true;
+            view.needRedraw = true;
+            return true;
         }
     };
     var pre =
@@ -201,7 +201,7 @@ Arrow.prototype =
     function onCreate() 
     { 
     	ctl.call(pre);
-    	if(typeof CToolbar !== "undefined") CToolbar.cancel.show(true);
+    	//if(typeof CToolbar !== "undefined") CToolbar.cancel.show(true);
     }
-    CMenu.Add({create:{_: {label: "Стрелку", click: onCreate}}});
+    ui('create/arrow', onCreate);
 })(storage, ctl, editor, view);
