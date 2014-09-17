@@ -1,21 +1,24 @@
-ui.setTree({
-	project:{_: Menu('Project')
-        },
-	view:{_: Menu('View'),
-                theme: {_: 'Theme',
+ui.load({
+	basic: {
+		hand:   'Hand tool',
+		select: 'Select tool'
+	},
+	project: {_:'Project'},
+    edit: {_: 'Edit',
+		undo: 'Undo',
+		redo: 'Redo',
+		_1: '-'
+	},
+	view: {_: 'View',
+		theme: {_: 'Theme',
 			lite:  'Lite',
-                        matrix: 'Matrix'
-                },
+            matrix: 'Matrix'
+        },
 		grid:{_: 'Grid',
 			lines:  'Lines',
 			dots:   'Dots',
 			none:   'None',
 			props:  'Settings ...'
 		}
-
-
-
 	}
-
-
 });

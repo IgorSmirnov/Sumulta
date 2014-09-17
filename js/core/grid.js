@@ -51,10 +51,10 @@ function Grid(view, editor)
     },*/
     if(typeof ui !== "undefined")
     {
-        ui.add('view/grid/lines', function(){});
-        ui.add('view/grid/dots', function(){});
-        ui.add('view/grid/none', function(){});
-        ui.add('view/grid/params', function(){});
+        ui('view/grid/lines', function(){});
+        ui('view/grid/dots', function(){});
+        ui('view/grid/none', function(){});
+        ui('view/grid/props', function(){});
 
 
         /*view:{grid: {label: "Линейка", 

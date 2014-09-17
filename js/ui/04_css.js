@@ -15,5 +15,5 @@ function setCSS(f)
     //editor.OnCSS(f);
 }
 
-ui.add('view/theme/lite', function(){setCSS("lite");});
-ui.add('view/theme/matrix', function(){setCSS("matrix");});
+ui('view/theme/lite',   function(){setCSS('lite');});
+ui('view/theme/matrix', function(){setCSS('matrix');});
