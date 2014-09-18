@@ -59,7 +59,10 @@ function Controller(view, window)
     };
     canvas.addEventListener("touchend", function(evt) {onMouse(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY, state.leftup);});
         
-    canvas.onmousemove = function(evt) {onMouse(evt.pageX, evt.pageY, state.move);};
+    canvas.onmousemove = function(evt) 
+    {
+        onMouse(evt.pageX, evt.pageY, state.move);
+    };
         
     var time = 0;
     canvas.addEventListener("touchmove", function(evt)
@@ -107,6 +110,11 @@ function Controller(view, window)
         state = result;
         if(state._enter) state._enter();
     }
+    this.update = function()
+    {
+        view.needRedraw = true;
+        view.commit(state);
+    };    
     this.go = function(newState)
     {
         if(!state) {state = newState; return;}

@@ -294,10 +294,10 @@ function NetLoader()
 
 var Loader = new NetLoader();
 
-CMenu.Add({
+/*CMenu.Add({
     net:{label:"Электроника",
     	//run: {label: "Пуск", click: Net.Solve},
 		runw: {label: "Пуск Worker", click: Loader.run},
 		stopw: {label: "Завершить Worker", click: Loader.stop}
-    		}});
+    		}});*/
 

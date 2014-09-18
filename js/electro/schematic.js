@@ -1,7 +1,7 @@
 "use strict";
 // Символы электронных элементов
 
-var schematic = new function()
+var schematic = new function(storage, ui)
 {
 	this.models = {};
 	/////////////// Описание детали //////////////////////////
@@ -53,30 +53,30 @@ var schematic = new function()
 				if(typeof this[x] === "string" && this[x].substr(0, 8) === "function")
 					this[x] = eval("(" + this[x] + ")");
 			Part.prototype = this;
-			Main.Ctors["Part_" + this.names[0]] = Part; 
+			storage.ctors["Part_" + this.names[0]] = Part; 
 		},
-		moveBy: function(dx, dy) { if(!this._mov) {this.x += dx; this.y += dy; this._mov = true;}},
-		draw: function(Type)
+		moveBy: function(dx, dy) { if(!(this._s & 4)) {this.x += dx; this.y += dy; this._mov = true;}},
+		draw: function(ctx, type)
 		{
-			var color = (Type > 0 || this._sel) ? "#F00000" : "#800000";
+			var color = (type > 0 || (this._s & 2)) ? "#F00000" : "#800000";
 			var M = this.M;
 			ctx.fillStyle = color;
 			ctx.strokeStyle = color;
 			if(this.D)
 			{
 				ctx.transform(M[0], M[1], M[2], M[3], this.x, this.y);
-				this.D();
-				ctx.setTransform(Main.Scale, 0, 0, Main.Scale, Main.OffsetX, Main.OffsetY);
+				this.D(ctx);
+				ctx.setTransform(view.scale, 0, 0, view.scale, view.offsetX, view.offsetY);
 			}
-			if(this.name) this.name.draw(0);
-			if(this.val) this.val.draw(0);
-			if(this.foot) this.foot.draw(0);
-			for(var t in this.fields) this.fields[t].draw(0);
+			if(this.name) this.name.draw(ctx, 0);
+			if(this.val) this.val.draw(ctx, 0);
+			if(this.foot) this.foot.draw(ctx, 0);
+			for(var t in this.fields) this.fields[t].draw(ctx, 0);
 			var pins = this._p;
-			for(var x in pins) if(MouseObject !== pins[x]) pins[x].draw(0);
+			for(var x in pins) if(editor.mo !== pins[x]) pins[x].draw(ctx, 0);
 		},
 	    GetPSel: function() {return this._sel;},
-		Hit: function(X, Y)
+		hit: function(X, Y, adm)
 		{
 			var M = this.M;
 			var pins = this.pins;
@@ -86,7 +86,7 @@ var schematic = new function()
 				var p = pins[t];
 				var x = M[0] * p.x + M[1] * p.y - X;
 				var y = M[3] * p.y - M[2] * p.x - Y;
-				if(Math.abs(x) < Main.adm && Math.abs(y) < Main.adm) return this._p[t];
+				if(Math.abs(x) < adm && Math.abs(y) < adm) return this._p[t];
 			}
     		var d = M[0] * M[3] - M[1] * M[2];
     		var A = X * d * M[3] + Y * -d * M[1];
@@ -95,7 +95,7 @@ var schematic = new function()
     		if(A > br.l && A < br.r && B > br.t && B < br.b) return this;
 			return null;
 		},
-		RHit: function(l, t, r, b)
+		rHit: function(l, t, r, b)
 		{
 			var br = this.br;
 			if(!br) return false;
@@ -124,7 +124,7 @@ var schematic = new function()
 		},
 		child: function(c) {return this._p[c];}
 	};
-	Main.Ctors["PartDef"] = this.PartDef;
+	storage.ctors["PartDef"] = this.PartDef;
 	//////////// Контакт ///////////////////////////////
 	function Pin(o, p) 
 	{
@@ -145,10 +145,10 @@ var schematic = new function()
         	for(var x in p) if(p[x] === this) {i = x; break;}
         	return '' + Items.indexOf(this.o) + '.' + i;
         },
-        draw: function(Type)
+        draw: function(ctx, type)
         {
-        	ctx.fillStyle = this._sel ? "#FF0000" :(Type > 0 ? "#808080": Main.Color);
-            if(Type > 0 || this._sel || !this._der || this._der.length === 0 || this._der.length > 2)
+        	ctx.fillStyle = (this._s & 2) ? "#FF0000" :(type > 0 ? "#808080": css.def);
+            if(type > 0 || (this._s & 2) || !this._der || this._der.length === 0 || this._der.length > 2)
             {
                 ctx.lineWidth = 1;
                 ctx.beginPath();
@@ -169,7 +169,7 @@ var schematic = new function()
 	{
 		ctor:"Field",
 		ta:{C:"center", L:"left", R:"right"},
-		draw: function(Type)
+		draw: function(ctx, Type)
 		{
 			if(!this.t || this.h) return;
 			ctx.font = this.s.toString() + "px monospace";
@@ -184,21 +184,21 @@ var schematic = new function()
 				//ctx.rotate(-Math.PI * 0.5);
 				ctx.transform(0, -1.0, 1.0, 0, fx, fy);
 				ctx.fillText(this.t, 0, 0);
-				ctx.setTransform(Main.Scale, 0, 0, Main.Scale, Main.OffsetX, Main.OffsetY);
+				ctx.setTransform(view.scale, 0, 0, view.scale, view.offsetX, view.offsetY);
 			}
 			else ctx.fillText(this.t, fx, fy);			
 		}
 	};
-	Main.Ctors["Field"] = this.Field;
+	storage.ctors["Field"] = this.Field;
 	
 	////////////// Создание экземпляров детали /////////////////////
-	if(!workspace.partLib)
+	if(!storage.data.partLib)
 	{
-		var w = workspace;
-		workspace = {partLib:{}};
-		for(var x in w) workspace[x] = w[x];
+		var w = storage.data;
+		storage.data = {partLib:{}};
+		for(var x in w) storage.data[x] = w[x];
 	}
-	var lib = workspace.partLib;
+	var lib = storage.data.partLib;
 	//var ctors = {};
 	
 	this.addToLib = function(name, obj)
@@ -220,19 +220,38 @@ var schematic = new function()
 			this._p = p; 			
 		};
 		Part.prototype = obj;
-		lib[name] = obj;
-		Main.Ctors["Part_" + name] = Part;
+		if(name) lib[name] = obj;
+		storage.ctors[name ? 'Part_' + name : '<unknown>'] = Part;
 		var menu = {label:"Компонент"};
 		menu[name] = {label:name, click: this.onCreate};
-		CMenu.Add({create:{kicad:menu}});
+		//CMenu.Add({create:{kicad:menu}});
 	};
 	
 	this.onCreate = function(e)
 	{
-		var m = Main.Ctors["Part_" + e.target.innerText];
-		Items.push(new m());		
+		var m = storage.ctors["Part_" + e.target.innerText];
+		storage.active.push(new m());
 	};
-}();
+    ui('create/part').hover(function(){
+    	var r = [];
+    	for(var x in lib) r.push(x);
+        return r;
+    });
+    ui.load({create:{part:'Part'}});
+}(storage, ui);
+
+Point.prototype.draw = function(ctx, Type) {
+    ctx.fillStyle = (this._s & 2) ? "#FF0000" :(Type > 0 ? "#808080": css.def);
+    if(Type > 0 || (this._s & 2) || !this._der || this._der.length === 0 || this._der.length > 2) {
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        var p = this;
+        if(p.x === undefined) p = this.pos();
+        ctx.arc(p.x, p.y, 1, 0, 2 * Math.PI, false);
+        ctx.fill();
+    }
+};
+
 
 (function ()
 {
@@ -265,7 +284,7 @@ var schematic = new function()
 		this.I = (I * 10);
 	};
 
-	LED.D = function() 
+	LED.D = function(ctx) 
 	{
 		if(this.I)
 		{
@@ -312,4 +331,44 @@ var schematic = new function()
 	schematic.addToLib("LED", LED);
 
 
+})();
+
+
+(function ()
+{
+	var unk = new schematic.PartDef("<unknown>");
+	unk.br = {l:-2.5, r: 6.25, t: -2.5, b: 4}; // bounding rect
+	unk.pins = {1:{x:-10, y: 0}, 2:{x: 10, y: 0}}; // pins
+	schematic.models.unk = {
+		ctor: function(fields, nodes, brs)
+		{
+			var y = 1.0 / 30.0;
+			var br = brs[0];
+			var n1 = nodes[1], n2 = nodes[2];
+			this.putY = function()
+			{
+				br.y = y;
+			};
+			this.get = function()
+			{
+				return {I:(n1.V - n2.V) * y};
+			};
+		},
+		nodes: {1:null, 2:null},
+		branches: [{p:1, q: 2}]
+	};
+	unk.onMsg = function(msg)
+	{
+		var I = msg.I;
+		if(I < 0.001) I = 0.0;
+		if(I > 0.100) I = 0.1;
+		this.I = (I * 10);
+	};
+
+	unk.D = function(ctx) 
+	{
+		ctx.font = "10px monospace";
+		ctx.fillText('???', 0, 0);
+	};
+	schematic.addToLib(null, unk);
 })();

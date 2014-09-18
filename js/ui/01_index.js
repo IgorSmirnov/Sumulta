@@ -46,9 +46,14 @@ function UI() {
     ui.growers = [];
     ui.upds = [];
     Item.prototype = {
-        load: load
-    }
-	return ui;
+        load: load,
+        hover: function(cb)
+        {
+            this._hv = cb;
+            update(this);
+        }
+    };
+    return ui;
 }
 
 var ui = UI();

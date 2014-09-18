@@ -3,7 +3,13 @@ ui.load({
 		hand:   'Hand tool',
 		select: 'Select tool'
 	},
-	project: {_:'Project'},
+	project: {_:'Project',
+        modules: {_: 'Modules',
+            electro: 'Electronics',
+            cnc:     'CNC'
+        },
+        import: 'Import ...'
+	},
     edit: {_: 'Edit',
 		undo: 'Undo',
 		redo: 'Redo',

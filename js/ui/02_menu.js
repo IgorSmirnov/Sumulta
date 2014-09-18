@@ -6,20 +6,37 @@ function Menu(ui, body) {
         var li = i._li;
         if(!li) return;
         li.onclick = i._ex;
+        li.onmouseenter = (!i._hv) ? undefined : function() {
+            var d = i._hv();
+            li.textContent = name;
+            var ul = createChild('ul', li);
+            for(var x in d)
+            {
+                var l = createChild('li', ul);
+                l.textContent = d[x];
+            } 
+        };
+        var cec = li.childElementCount;
+        li.hidden = !(i._ex || i._hv || cec);
         if(typeof name !== 'string') return;
         if(name === "-") {li.className = "msep"; return;}
-        var cec = li.childElementCount;
-        if(cec)
-        {
+        if(cec) {
             for(var x = 0, t = []; x < cec; x++) t.push(li.children[x]);
             li.textContent = name;
             for(var x in t) li.appendChild(t[x]);
-        } else li.textContent = name;
+        } else {
+            li.textContent = name;
+        }
     });
 	ui.growers.push(function(item, parent) {
 		var pli = parent._li;
 		if(!pli) return;
-		var ul = pli.children.length ? pli.children[0] : createChild('ul', pli);
+		var ul;
+        if(pli.childElementCount) ul = pli.children[0];
+        else {
+            ul = createChild('ul', pli);
+            pli.hidden = false;
+        } 
 		var li = createChild('li', ul);
 		li.innerText = item._name;
 		item._li = li;
