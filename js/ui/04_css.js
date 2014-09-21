@@ -11,7 +11,7 @@ var css =
 
 function setCSS(f)
 {
-    document.getElementById('css').href = 'css/' + f + '.css';
+    document.getElementById('css').href = '/css/' + f + '.css';
     //editor.OnCSS(f);
 }
 

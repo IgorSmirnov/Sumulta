@@ -1,0 +1,30 @@
+extends parts/layout
+
+block head
+	link(rel='stylesheet', href='/css/head.css')
+
+block content
+	h1 SUMULTA
+	
+	div(class='right')
+		include parts/user
+	div(class='center')
+		div(class='group')
+			h1 Новости
+			div(id='news') загрузка ...
+		div(class='half')
+			div(class='group')
+				h1 Проекты
+				button(onclick='newProject()') Создать новый проект
+				div(id='projects') загрузка ...
+		div(class='half')
+			div(class='group')
+				h1 Пользователи
+				div(id='users') загрузка ...
+
+	script(src='js/api/ajax.js')
+	script(src='js/api/api.js')
+	script(src='js/head.js')
+
+	include parts/registration
+	

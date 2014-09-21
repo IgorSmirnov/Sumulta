@@ -12,13 +12,13 @@ module.exports = function(req, res, next)
     {
         var message = 'Cannot register: username or password is empty';
         log.warn(message);
-        res.statusCode = 400;
+        res.status(400);
         res.json({result: 'error', message: message});
         return;
     }
     log.info("Register user:", username);
 
-    User.findOne({username: username}, function(err, user)
+    User.findOne({name: username}, function(err, user)
     {
         if(err) return next(err);
         if(user)
@@ -28,13 +28,14 @@ module.exports = function(req, res, next)
         }
         else
         {
-            user = new User({username: username, hash: hash(username, pass)});
+            user = new User({name: username, hash: hash(username, pass)});
             user.save(function(err)
             {
                 if(err) return next(err);
                 req.login(user, function(err)
                 {
                     if(err) return next(err);
+                    //res.redirect('/' + username + '/');
                     res.json({result:'registered'});
                 }) 
             });

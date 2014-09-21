@@ -7,13 +7,17 @@ body {
     font: 12px Arial, Helvetica, sans-serif;
 }
 
+
 /************ Цвета и тени меню *************************/
 
 .hmenu, .hmenu li ul, .dialog, .combobox ul, .group, .vmenu
 {
     cursor: pointer;
-    color: #222;/*#79FF00;*/
-    text-shadow: 0 1px 1px rgba(0,0,0,.1);
+    color: #567;
+    /*font-weight: bolder;*/
+    /*text-shadow: 1px 1px 10px rgba(0,0,0,.7);*/
+    /*font: 14px/100% Arial, Helvetica, sans-serif;*/
+    /*text-shadow: 1px 1px 7px rgba(0,0,0,.9);*/
     background: rgba(205, 236, 240, 0.7); /* Цвет фона меню невыбранного */
     background: linear-gradient(to top, rgba(205, 236, 240, 0.7), rgba(255, 255, 255, 0.7));
 
@@ -21,6 +25,21 @@ body {
     /*-moz-box-shadow: 5px 5px 25px #000;
     -webkit-box-shadow: 5px 5px 25px #000;*/
 
+}
+
+.dialog h1, .group h1, .topbar
+{
+    background: linear-gradient(to top, rgba(153, 191, 195, 0.7), rgba(207, 248, 240, 0.7));
+    color: white;
+}
+
+
+button, .button
+{
+    /*background: linear-gradient(to top, rgba(153, 191, 195, 0.9), rgba(207, 248, 240, 0.9));*/
+    text-shadow: 1px 3px 3px rgba(0,0,0,.5);
+    background: linear-gradient(to top, rgba(100, 137, 141, 0.9), rgba(133, 228, 216, 0.34));*/
+    color: white;    
 }
 
 .hmenu li:hover, .vmenu div:hover
@@ -174,7 +193,7 @@ div.checked, div.checked:hover
     border-radius: 10px 10px 10px 10px;
 }
 
-.dialog > div, .group > div
+.dialog > div, .group > div, .topbar > div
 {
     padding: 10px;  
 }
@@ -182,29 +201,26 @@ div.checked, div.checked:hover
 .dialog h1, .group h1
 {
     border-radius: 10px 10px 0px 0px;
-    background: linear-gradient(to top, rgba(153, 191, 195, 0.7), rgba(207, 248, 240, 0.7));
     text-align: center;
     margin: 0;
     font-size: 20px;
+    padding: 4px;
+}
+
+button, .button {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    padding: .5em 2em .55em;
+    -webkit-border-radius: .5em; 
+    -moz-border-radius: .5em;
+    border-radius: .6em;
+    border:0;
 }
 
 
-button {
-	display: inline-block;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	font: 14px/100% Arial, Helvetica, sans-serif;
-	padding: .5em 2em .55em;
-	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-border-radius: .5em; 
-	-moz-border-radius: .5em;
-	border-radius: .6em;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-}
 button:hover {
 	text-decoration: none;
 }
@@ -259,4 +275,32 @@ button:active {
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
     box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+}
+
+
+.blocker
+{
+    position: absolute;
+    width:100%; 
+    height:100%; 
+    top: 0; 
+    left:0;
+    z-index: 15;
+    background: rgba(88, 88, 88, 0.5);
+}
+
+/* Логобар */
+.topbar
+{
+    border-radius: 0px 0px 0px 10px;
+}
+
+.logo
+{
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Tahoma;/*,Geneva,sans-serif;*/
+    color: white;
+    padding: 5px;
 }

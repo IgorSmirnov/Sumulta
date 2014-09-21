@@ -11,7 +11,7 @@ passport.use(new LocalStrategy(
 	function(username, password, done)
     {
         log.info('User ' + username + ' try to login');
-        User.findOne({username: username}, function(err, user)
+        User.findOne({name: username}, function(err, user)
         {
         	if(err) return done(err);
         	if(user && user.hash === hash(username, password)) 

@@ -1,0 +1,9 @@
+div.topbar
+	div#login(hidden='true')
+		input#loguser(type='edit', placeholder='логин', size='10')
+		input#logpass(type='password', placeholder='пароль', size='10')
+	a.logo(href='/') SUMULTA
+	label#user(hidden='true') User
+	button#benter(onclick='auth.login();') Войти
+	//button#outb(hidden='true', onclick='auth.logout();') Выйти
+		

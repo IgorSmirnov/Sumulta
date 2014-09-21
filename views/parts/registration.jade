@@ -1,0 +1,19 @@
+div#reg.blocker(hidden='false')
+	form.group
+		h1 Регистрация
+		table
+			tr
+				td логин
+				td
+					input#reguser(type='text', size='10')
+			tr
+				td введите пароль
+				td
+					input#regpass(type='password', size='10')
+			tr
+				td повторите пароль
+				td
+					input#regpass2(type='password', size='10')
+		div(align='center')
+			button(type='button', onclick='api.register()') Зарегистрировать
+			button(type='button', onclick='hide("reg")') Закрыть

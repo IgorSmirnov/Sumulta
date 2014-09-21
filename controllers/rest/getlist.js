@@ -5,8 +5,11 @@ var mongoose = require('mongoose');
 
 // Module 'get' gets items in accordance with query parameters
 
-module.exports = function(model)
+module.exports = function(model, fields)
 {
+    var fs = {};
+    if(fields) for(var x in fields) fs[fields[x]] = 1;
+    else fs = {name:1};
     var Model = mongoose.model(model);
 
     return function(req, res, next)
@@ -16,7 +19,7 @@ module.exports = function(model)
         if(req.query && req.query.q && req.query.q != '') 
             selector = {name: {$regex: req.query.q, $options: '-i'}};
         // 2. Make query
-        var query = Model.find(selector, {name:1});
+        var query = Model.find(selector, fs);//);
         // 3. Calculate size of total unsorted result
         Model.count(selector, function(err, count)
         {

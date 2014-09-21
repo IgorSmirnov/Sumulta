@@ -7,18 +7,47 @@ var requireTree  = require('require-tree');
 var controllers  = requireTree('../controllers');
 var fs           = require('fs');
 
+var users        = controllers.users;
+var render       = controllers.render;
+var rest         = controllers.rest;
+
 module.exports = function(app)
 {
+    if(config.get('express:get_static'))
+    {
+        app.use('/js/',  express.static('./js/'));
+        app.use('/css/', express.static('./css/'));
 
-    app.get('/', controllers.render('index', {scripts: ['./js/core.js']}));
-    app.get('/debug', controllers.render('index', {scripts: controllers.readdir('./js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
-    app.get('/admin', controllers.render('admin'));
-    app.post('/admin/rebuild', controllers.rebuild);
+        app.use('/admin/test', express.static('./test/client'))
+    }
+    // Администирование
 
-    // Users API
-    //app.post  ('/api/register',     require('../users/register'));
-    //app.post  ('/api/login',        require('../users/login'));
-    //app.post  ('/api/logout',       require('../users/must-auth'), require('../users/logout'));
+    app.get   ('/debug',               render('project', {scripts: controllers.readdir('./js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
+    app.get   ('/admin',               render('admin'));
+
+    app.post  ('/admin/rebuild',       controllers.rebuild);
+
+    // API 
+    app.post  ('/register',            users.register);
+    app.post  ('/login',           users.login);
+    app.post  ('/logout',          users.must_auth, users.logout);
+
+    // Пользовательские запросы
+
+
+    app.get   ('/news',                rest.getlist('new'));    // Вернуть новости
+    app.get   ('/users',               rest.getlist('user'));    // Вернуть список пользователей
+    app.get   ('/projects',            rest.getlist('project'));    // Вернуть список проектов
+    app.get   ('/:user/json',          rest.getlist('user'));    // Вернуть проекты пользователя
+    app.get   ('/:user/:project/json', render('project', {scripts: ['./js/core.js']})); // Вернуть проект
+
+    // Страницы сайта
+
+    app.get   ('/',                    render('head'));    // Главная страница
+    app.get   ('/:user',               render('user'));    // Cтраница пользователя
+  //app.get   ('/:user/:project',      render('project', {scripts: ['./js/core.js']})); // Страница проекта
+    app.get   ('/:user/:project',      render('project', {
+    scripts: controllers.readdir('./js/api/', './js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
 
     // Books API protection
     //app.all   ('/api/books',        require('../users/must-auth'));
@@ -36,13 +65,7 @@ module.exports = function(app)
     //app.delete('/api/books/:id',    require('../book/delete'));
 
 
-    if(config.get('get_static'))
-    {
-        app.use('/js/',  express.static('./js/'));
-        app.use('/css/', express.static('./css/'));
-
-        app.use('/admin/test', express.static('./test/client'))
-    }
+    // Ошибки
 
     app.use(function(req, res, next)
     {
@@ -50,7 +73,6 @@ module.exports = function(app)
         log.debug('URL not found:', req.url);
         res.json({result: 'error', message: 'URL not found'});
     });
-    // Server internal error
     app.use(function(err, req, res, next)
     {
         res.status(err.status || 500);

@@ -1,7 +1,7 @@
-extends layout
+extends parts/layout
 
 block content
-	script(src="js/ajax.js")
+	script(src="js/api/ajax.js")
 	script function log(a) {document.getElementById('ta').innerText += a;}
 	button(onclick="log(ajax.post('admin/rebuild'));") Rebuild
 	textarea#ta

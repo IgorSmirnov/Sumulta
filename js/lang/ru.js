@@ -1,4 +1,9 @@
 ui.load({
+    auth: {
+        login:  'Войти',
+        logout: 'Выйти',
+        hello:  'Приветствую, '
+    },
 	basic: {
 		hand:   'Рука',
 		select: 'Выбрать'

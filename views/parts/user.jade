@@ -1,0 +1,9 @@
+form(class='group')
+	h1 Вход
+	div
+		div(align='center')
+			input#loguser(type='edit', placeholder='логин', size='10')
+			input#logpass(type='password', placeholder='пароль', size='10')
+		div(align='center')
+			button(type='button', onclick='api.login()') Войти
+			button(type='button', onclick='show("reg")') Регистрация

@@ -11,11 +11,11 @@
     }
     //var electro = null;
     ui('project/modules/electro', function() {
-        load('./js/electro/schematic.js',
-             './js/electro/kicad.js',
-             './js/electro/network.js');
+        load('/js/electro/schematic.js',
+             '/js/electro/kicad.js',
+             '/js/electro/network.js');
     });
     ui('project/modules/cnc', function() {
-        load('./js/cnc.js');
+        load('/js/cnc.js');
     });
 })();
