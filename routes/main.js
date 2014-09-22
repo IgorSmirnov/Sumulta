@@ -33,8 +33,7 @@ module.exports = function(app)
     app.post  ('/auth/login',          users.login);
     app.post  ('/auth/logout',         users.must_auth, users.logout);
     app.get   ('/auth/vk',             passport.authenticate('vkontakte'));
-    app.get   ('/auth/vkcb',           passport.authenticate('vkontakte', {
-        failureRedirect: '/login'}),
+    app.get   ('/auth/vkcb',           passport.authenticate('vkontakte', {failureRedirect: '/login'}),
         function(req, res) { 
             log.info('success!!!');
             res.redirect('/');});
