@@ -29,13 +29,16 @@ passport.use(new LocalStrategy(
 passport.use(new VkStrategy.Strategy({
     clientID:     '4559576', // VK.com docs call it 'API ID'
     clientSecret: 'QW6cBhWGl97IRtgE1Zr6',
-    callbackURL:  "http://sumulta.cloudapp.net/auth/vk/callback"
+    callbackURL:  "http://sumulta.cloudapp.net/auth/vkcb"
   },
   function(accessToken, refreshToken, profile, done) {
-    log.info('Auth vk:', accessToken, refreshToken, profile);
-    User.findOrCreate({ vk: profile.id }, function (err, user) {
+    log.info('Auth vk');
+    log.info('accessToken:', accessToken);
+    log.info('refreshToken:', refreshToken);
+    log.info('profile:', profile);
+    /*User.findOrCreate({ vk: profile.id }, function (err, user) {
       return done(err, user);
-    });
+    });*/
   }
 ));
 
