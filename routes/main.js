@@ -6,6 +6,7 @@ var log          = require('winston');
 var requireTree  = require('require-tree');
 var controllers  = requireTree('../controllers');
 var fs           = require('fs');
+var passport     = require('passport');
 
 var users        = controllers.users;
 var render       = controllers.render;
@@ -28,9 +29,10 @@ module.exports = function(app)
     app.post  ('/admin/rebuild',       controllers.rebuild);
 
     // API 
-    app.post  ('/register',            users.register);
-    app.post  ('/login',           users.login);
-    app.post  ('/logout',          users.must_auth, users.logout);
+    app.post  ('/auth/register',       users.register);
+    app.post  ('/auth/login',          users.login);
+    app.post  ('/auth/logout',         users.must_auth, users.logout);
+    app.get   ('/auth/vk',             passport.authenticate('vkontakte'));
 
     // Пользовательские запросы
 

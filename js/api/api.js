@@ -40,7 +40,7 @@ var api = new (function()
 		var pass = byId('regpass').value;
 		var pass2 = byId('regpass2').value;
 		//if(pass !== pass2) return;
-		ajax.post('/register', {
+		ajax.post('/auth/register', {
 			data:{username: user, password: pass},
 			cb: function(status, text)
 			{
@@ -61,7 +61,7 @@ var api = new (function()
 		var pass = byId('logpass').value;
 		if(!user || !pass) return;
 		//if(pass !== pass2) return;
-		ajax.post('/login', {
+		ajax.post('/auth/login', {
 			data:{username: user, password: pass},
 			cb: function(status, text)
 			{
@@ -78,7 +78,7 @@ var api = new (function()
 	}
 	this.logout = function(done)
 	{
-		ajax.post('/logout', {
+		ajax.post('/auth/logout', {
 			cb: function(status, text)
 			{
 				var data = JSON.parse(text);

@@ -1,10 +1,11 @@
 'use strict';
 
-var passport 		= require('passport');
-var LocalStrategy 	= require('passport-local');
-var User			= require('mongoose').model('user');
-var hash 			= require('../controllers/users/hash');
-var log             = require('winston');
+var passport 		  = require('passport');
+var LocalStrategy = require('passport-local');
+var VkStrategy    = require('passport-vkontakte');
+var User			    = require('mongoose').model('user');
+var hash 			    = require('../controllers/users/hash');
+var log           = require('winston');
 
 passport.use(new LocalStrategy(
 	//{usernameField: 'username', passwordField: 'password'},
@@ -23,6 +24,20 @@ passport.use(new LocalStrategy(
         	return done(null, false, {message: "incorrect username or password"});
         });
 	}));
+
+
+passport.use(new VkStrategy.Strategy({
+    clientID:     '4559576', // VK.com docs call it 'API ID'
+    clientSecret: 'QW6cBhWGl97IRtgE1Zr6',
+    callbackURL:  "http://sumulta.cloudapp.net/auth/vk/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    log.info('Auth vk:', accessToken, refreshToken, profile);
+    User.findOrCreate({ vk: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
 
 passport.serializeUser(function(user, done) 
 {
