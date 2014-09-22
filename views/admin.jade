@@ -1,7 +1,14 @@
 extends parts/layout
 
 block content
+	link(rel='stylesheet', href='/css/admin.css')
 	script(src="js/api/ajax.js")
+	script(src="js/admin.js")
 	script function log(a) {document.getElementById('ta').innerText += a;}
 	button(onclick="log(ajax.post('admin/rebuild'));") Rebuild
 	textarea#ta
+	div
+		div
+			button(onclick='refreshLog();') Refresh log
+		table#log
+			caption Logs
