@@ -1,5 +1,9 @@
 'use strict';
 
 var log = require('winston');
+require('winston-mongodb').MongoDB;
 
-// We can make advanced setup of logger here
+log.add(log.transports.MongoDB, {db: 'sumulta'});
+
+
+

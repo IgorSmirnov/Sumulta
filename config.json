@@ -2,7 +2,7 @@
 	"express":
 	{
 		"port": 8000,
-		"get_static": false
+		"get_static": true
 	},
 	"mongoose":
 	{

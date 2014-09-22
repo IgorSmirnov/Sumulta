@@ -15,6 +15,7 @@
         "passport-local":"*",
         "passport-vkontakte":"*",
         "winston":"*",
+        "winston-mongodb":"*",
         "nconf":"*",
         "colors":"*",
 	"jade":"*"
