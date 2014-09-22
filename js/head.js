@@ -1,17 +1,17 @@
 'use strict';
 
 api.getUsers(function(error, data){
-	var u = document.getElementById('users');
-	if(!data.count) u.innerText = 'Нет пользователей';
+	var u = byId('users');
+	if(!data.count) u.textContent = 'Нет пользователей';
 	else
 	{
-		u.innerText = '';
+		u.textContent = '';
 		var users = data.items;
 		for(var x in users)
 		{
 			var div = document.createElement('div');
 			var a = document.createElement('a');
-			a.innerText = users[x].name;
+			a.textContent = users[x].name;
 			a.href = '/' + users[x].name;
 			div.appendChild(a);
 			u.appendChild(div);
@@ -21,44 +21,52 @@ api.getUsers(function(error, data){
 
 
 api.getProjects(function(error, data){
-	var u = document.getElementById('projects');
-	if(!data.count) u.innerText = 'Нет проектов';
+	var u = byId('projects');
+	if(!data.count) u.textContent = 'Нет проектов';
 	else
 	{
-		var projects = data.projects;
-		for(var x in projects)
+		var items = data.items;
+		for(var x in items)
 		{
-			var a = document.createElement('a');
-			a.innerText = user[x].name;
-			u.appendChild(a);
+			append('a', u).textContent = items[x].name;
 		}
 	}
 }, {limit:10});
 
 api.getNews(function(error, data){
-	var u = document.getElementById('news');
-	if(!data.count) u.innerText = 'Нет новостей';
+	var u = byId('news');
+	if(!data.count) u.textContent = 'Нет новостей';
 	else
 	{
-		var projects = data.projects;
-		for(var x in projects)
+		var items = data.items;
+		for(var x in items)
 		{
-			var a = document.createElement('a');
-			a.innerText = user[x].name;
-			u.appendChild(a);
+			append('a', u).textContent = items[x].name;
 		}
 	}
 }, {limit:10});
 
-function show(id) {
-	document.getElementById(id).hidden = false;
-}
-
-function hide(id) {
-	document.getElementById(id).hidden = true;
-}
-
 function newProject()
 {
 	location.href = '/unknown_user/new_project';
+}
+
+function login()
+{
+	api.login(function(done) {
+		if(!done) return;
+		hide('login');
+		show('logout');
+		//label.textContent = 'Приветствую, ' + user.value;
+	});
+}
+
+function logout()
+{
+	api.logout(function(done) {
+		if(!done) return;
+		hide('logout');
+		show('login');		
+	});
+
 }

@@ -9,10 +9,10 @@ function Menu(ui, body) {
         li.onmouseenter = (!i._hv) ? undefined : function() {
             var d = i._hv();
             li.textContent = name;
-            var ul = createChild('ul', li);
+            var ul = append('ul', li);
             for(var x in d)
             {
-                var l = createChild('li', ul);
+                var l = append('li', ul);
                 l.textContent = d[x];
             } 
         };
@@ -34,10 +34,10 @@ function Menu(ui, body) {
 		var ul;
         if(pli.childElementCount) ul = pli.children[0];
         else {
-            ul = createChild('ul', pli);
+            ul = append('ul', pli);
             pli.hidden = false;
         } 
-		var li = createChild('li', ul);
+		var li = append('li', ul);
 		li.innerText = item._name;
 		item._li = li;
 	});
@@ -46,7 +46,7 @@ function Menu(ui, body) {
 		var li = item._li;
 		if(!li)
 		{
-			li = createChild('li', parent);
+			li = append('li', parent);
 			item._li = li;
 		}
 		if(item._name) li.innerText = item._name;
@@ -54,14 +54,14 @@ function Menu(ui, body) {
 		var ul = null;
 		for(var x in item) if(item.hasOwnProperty(x) && x.charAt(0) !== '_')
 		{
-			if(!ul) ul = createChild('ul', li);
+			if(!ul) ul = append('ul', li);
 			make(item[x], ul);
 		}
 	}
     function makeMenu() {
         if(!menu)
         {
-            menu = createChild('menu', body); 
+            menu = append('menu', body); 
             menu.className = 'hmenu';
         }
         if(arguments.length) for(var x in arguments)

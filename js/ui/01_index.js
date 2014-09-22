@@ -1,11 +1,5 @@
 ﻿'use strict';
 
-function createChild(tag, parent) {
-    var r = document.createElement(tag);
-    (parent || document.body).appendChild(r);
-    return r;
-}
-
 function UI() {
     var ui;
     function Item(parent, name) {

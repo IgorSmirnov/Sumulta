@@ -2,7 +2,7 @@ extends parts/layout
 
 block content
 	link(rel='stylesheet', href='/css/admin.css')
-	script(src="js/api/ajax.js")
+	script(src="js/lib.js")
 	script(src="js/admin.js")
 	script function log(a) {document.getElementById('ta').innerText += a;}
 	button(onclick="log(ajax.post('admin/rebuild'));") Rebuild

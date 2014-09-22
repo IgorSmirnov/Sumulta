@@ -23,7 +23,7 @@ module.exports = function(app)
     }
     // Администирование
 
-    app.get   ('/debug',               render('project', {scripts: controllers.readdir('./js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
+    //app.get   ('/debug',               render('project', {scripts: controllers.readdir('./js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
     app.get   ('/admin',               render('admin'));
     app.get   ('/admin/log.json',      rest.getlist('log', ['timestamp', 'level', 'message']));
 
@@ -54,7 +54,7 @@ module.exports = function(app)
     app.get   ('/:user',               render('user'));    // Cтраница пользователя
   //app.get   ('/:user/:project',      render('project', {scripts: ['./js/core.js']})); // Страница проекта
     app.get   ('/:user/:project',      render('project', {
-    scripts: controllers.readdir('./js/api/', './js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
+        scripts: controllers.readdir('./js/lib.js', './js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
 
     // Books API protection
     //app.all   ('/api/books',        require('../users/must-auth'));

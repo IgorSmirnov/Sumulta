@@ -23,13 +23,6 @@ var ajax = new (function Ajax()
         return data.join('&');
     }
 
-    /*xmlhttp.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if(xmlhttp.status == 200) {
-       alert(xmlhttp.responseText);
-         }
-  }
-};*/
     function send(method, url, settings) {
         var xhr = getXHR();
         var cb = settings ? settings.cb : undefined;

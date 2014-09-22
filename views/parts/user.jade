@@ -1,9 +1,12 @@
 form(class='group')
 	h1 Вход
-	div
+	div#login
 		div(align='center')
 			input#loguser(type='edit', placeholder='логин', size='10')
 			input#logpass(type='password', placeholder='пароль', size='10')
 		div(align='center')
-			button(type='button', onclick='api.login()') Войти
+			button(type='button', onclick='login()') Войти
 			button(type='button', onclick='show("reg")') Регистрация
+	div#logout(hidden='true')
+		div Hello, user
+		button(type='button', onclick='logout()') Выйти

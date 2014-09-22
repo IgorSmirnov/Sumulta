@@ -1,4 +1,4 @@
-var api = new (function()
+var api = new (function(ajax)
 {
 	this.getUsers = function(func, query)
 	{
@@ -33,13 +33,12 @@ var api = new (function()
 		ajax.get('/news', {
 			cb: cb, query:query});
 	};
-	function byId(id) { return document.getElementById(id);}
 	this.register = function()
 	{
 		var user = byId('reguser').value;
 		var pass = byId('regpass').value;
 		var pass2 = byId('regpass2').value;
-		//if(pass !== pass2) return;
+		if(!user || !pass || pass !== pass2) return;
 		ajax.post('/auth/register', {
 			data:{username: user, password: pass},
 			cb: function(status, text)
@@ -60,7 +59,6 @@ var api = new (function()
 		var user = byId('loguser').value;
 		var pass = byId('logpass').value;
 		if(!user || !pass) return;
-		//if(pass !== pass2) return;
 		ajax.post('/auth/login', {
 			data:{username: user, password: pass},
 			cb: function(status, text)
@@ -92,4 +90,4 @@ var api = new (function()
 		})
 	}
 
-})();
+})(ajax);
