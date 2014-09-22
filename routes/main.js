@@ -25,6 +25,7 @@ module.exports = function(app)
 
     app.get   ('/debug',               render('project', {scripts: controllers.readdir('./js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
     app.get   ('/admin',               render('admin'));
+    app.get   ('/admin/log.json',      rest.getlist('log', ['timestamp', 'level', 'message']));
 
     app.post  ('/admin/rebuild',       controllers.rebuild);
 
