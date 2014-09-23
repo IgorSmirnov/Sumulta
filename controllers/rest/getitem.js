@@ -5,16 +5,13 @@ var log      = require('winston');
 
 // Module 'getitem' gets one item
 
-module.exports = function(model, param)
+module.exports = function(model)
 {
     var Model = mongoose.model(model);
-    var selector = {};
 
     return function(req, res, next)
     {
-        var id = req.params[param];
-        selector[param] = val;
-        Model.findOne(selector, {_id:0, __v:0}, function(err, item)
+        Model.findOne(req.params, {_id:0, __v:0}, function(err, item)
         {
             if(err) return next(err)
             if(item)
@@ -25,7 +22,7 @@ module.exports = function(model, param)
             else
             {
                 log.warn(model + ' not found');
-                res.statusCode = 404;
+                res.status(404);
                 res.json({result: false});
             }
         });

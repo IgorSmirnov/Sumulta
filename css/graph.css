@@ -1,3 +1,9 @@
+body
+{
+    margin: 0;
+    height: 100%;
+}
+
 canvas
 {
     position: absolute;
@@ -26,10 +32,29 @@ canvas
     user-select: none;
 }
 
-.topbar
+.topright
 {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 5;
 }
+
+.bottom
+{
+    bottom: 0;
+    width: 100%;
+}
+
+.bar
+{
+    position: absolute;
+    margin: 0;
+    z-index: 5;
+}
+
+.bar, .bar div
+{
+    display: inline-block;
+}
+

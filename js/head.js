@@ -1,7 +1,7 @@
 'use strict';
 
-api.getUsers(function(error, data){
-	var u = byId('users');
+var u = byId('users');
+if(u) api.getUsers(function(error, data){
 	if(!data.count) u.textContent = 'Нет пользователей';
 	else
 	{
@@ -19,29 +19,28 @@ api.getUsers(function(error, data){
 	}
 }, {limit:10});
 
-
-api.getProjects(function(error, data){
-	var u = byId('projects');
-	if(!data.count) u.textContent = 'Нет проектов';
+var p = byId('projects');
+if(p) api.getProjects(function(error, data){
+	if(!data.count) p.textContent = 'Нет проектов';
 	else
 	{
 		var items = data.items;
 		for(var x in items)
 		{
-			append('a', u).textContent = items[x].name;
+			append('a', p).textContent = items[x].name;
 		}
 	}
 }, {limit:10});
 
+var n = byId('news');
 api.getNews(function(error, data){
-	var u = byId('news');
-	if(!data.count) u.textContent = 'Нет новостей';
+	if(!data.count) n.textContent = 'Нет новостей';
 	else
 	{
 		var items = data.items;
 		for(var x in items)
 		{
-			append('a', u).textContent = items[x].name;
+			append('a', n).textContent = items[x].name;
 		}
 	}
 }, {limit:10});

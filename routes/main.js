@@ -42,11 +42,12 @@ module.exports = function(app)
     // Пользовательские запросы
 
 
-    app.get   ('/news',                rest.getlist('new'));    // Вернуть новости
-    app.get   ('/users',               rest.getlist('user'));    // Вернуть список пользователей
-    app.get   ('/projects',            rest.getlist('project'));    // Вернуть список проектов
-    app.get   ('/:user/json',          rest.getlist('user'));    // Вернуть проекты пользователя
-    app.get   ('/:user/:project/json', render('project', {scripts: ['./js/core.js']})); // Вернуть проект
+    app.get   ('/news.json',                         rest.getlist('new'));    // Вернуть новости
+    app.get   ('/users.json',                        rest.getlist('user'));    // Вернуть список пользователей
+    app.get   ('/projects.json',                     rest.getlist('project'));    // Вернуть список проектов
+    app.get   ('/:owner/projects.json',              rest.getlist('project'));    // Вернуть проекты пользователя
+    app.get   ('/:owner/:name.json',                 rest.getitem('project')); // Вернуть проект 
+    app.put   ('/:owner/:name.json', /*users.must_own,*/ rest.putitem('project')); // Сохранить проект 
 
     // Страницы сайта
 
@@ -55,10 +56,6 @@ module.exports = function(app)
   //app.get   ('/:user/:project',      render('project', {scripts: ['./js/core.js']})); // Страница проекта
     app.get   ('/:user/:project',      render('project', {
         scripts: controllers.readdir('./js/lib.js', './js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
-
-    // Books API protection
-    //app.all   ('/api/books',        require('../users/must-auth'));
-    //app.all   ('/api/books/*',      require('../users/must-auth'));
 
     // Projects API
     app.get   ('/api/projects',       controllers.rest.getlist('project'));
