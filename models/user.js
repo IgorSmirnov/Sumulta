@@ -17,7 +17,7 @@ var userSchema = new mongoose.Schema(
   	},
   	rights: 
   	{
-  		type: Array
+  		type: String
   	}
 });
 

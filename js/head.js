@@ -47,7 +47,14 @@ api.getNews(function(error, data){
 
 function newProject()
 {
-	location.href = '/unknown_user/new_project';
+	location.href = '/' + user.name + '/new_project';
+}
+
+if(user.name !== 'guest')
+{
+	hide('login');
+	show('logout');
+	byId('username').textContent = user.name;
 }
 
 function login()
@@ -56,6 +63,7 @@ function login()
 		if(!done) return;
 		hide('login');
 		show('logout');
+		byId('username').textContent = user.name;
 		//label.textContent = 'Приветствую, ' + user.value;
 	});
 }

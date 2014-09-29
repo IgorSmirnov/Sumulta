@@ -2,7 +2,7 @@
 
 var auth = new (function() {
 	var dlg = document.getElementById('login');
-	var user = document.getElementById('loguser');
+	var username = document.getElementById('loguser');
 	var pass = document.getElementById('logpass');
 	var label = document.getElementById('user');
 	var benter = document.getElementById('benter');
@@ -10,11 +10,11 @@ var auth = new (function() {
 	this.login = function() {
 		var labels = ui('auth');
 		if(dlg.hidden) dlg.hidden = false;
-		else if(!(user.value && pass.value)) dlg.hidden = true;
+		else if(!(username.value && pass.value)) dlg.hidden = true;
 		else api.login(function(done) {
 			if(!done) return;
 			label.hidden = false;
-			label.textContent = 'Приветствую, ' + user.value;
+			label.textContent = 'Приветствую, ' + username.value;
 			dlg.hidden = true;
 			benter.textContent = labels.logout._name;
 			benter.onclick = auth.logout;
@@ -31,4 +31,19 @@ var auth = new (function() {
 		});
 
 	}
+
+	/*var proj = byId('project');
+	proj.value = window.location.pathname.split('/')[2];
+	proj.onkeyup = function()
+	{
+		var url  = '/' + user.name + '/' + proj.value;
+		if(url !== window.location.pathname)
+            window.history.pushState(null, null, url);
+	}*/
 })();
+
+function AuthCtl($scope)
+{
+	$scope.auth = (user.name && user.name !== 'guest');
+	$scope.show = false;
+}

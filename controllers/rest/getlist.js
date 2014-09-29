@@ -48,7 +48,7 @@ module.exports = function(model, fields)
                 if(items.length)
                 {
                     log.info(model + 's found');
-                    res.json({result:'found', count: count, items: items});
+                    res.json(items);//{result:'found', count: count, items: items});
                 }
                 else
                 {

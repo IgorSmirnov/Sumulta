@@ -4,7 +4,6 @@ function Editor(storage, view, ctl)
 {
     this.mo = null;
     this.pointAlign = true;
-    var items = storage.active;
     var selRect = null;
     var ed = this;
     var adm = 3;
@@ -53,6 +52,7 @@ function Editor(storage, view, ctl)
     };
     function onFreeMove(mx, my) // Свободное движение мыши
     {
+        var items = storage.active;
         var mo = null, hp = 0, a = adm / view.scale
         for(var x = items.length; x--;)
         {
@@ -86,13 +86,14 @@ function Editor(storage, view, ctl)
     {
         move: function(mx, my)
         {
+            var items = storage.active;
             var dx = mx - MX;
             var dy = my - MY;
             MX = mx;
             MY = my;
             var mo = ed.mo;
             for(var x in items) if((items[x]._s & 2) && items[x].moveBy) items[x].moveBy(dx, dy);
-            if(mo && !(mo._s & 2) && mo.moveBy)
+            if(mo && mo.moveBy)
                 mo.moveBy(dx, dy);
             for(var x in items) items[x]._s &= 3;
             if(mo) mo._s &= 3;
@@ -106,6 +107,7 @@ function Editor(storage, view, ctl)
         {
             if(!(ed.mo._s & 2))
             {
+                var items = storage.active;
                 for(var x in items) items[x]._s &= ~2; // Сбрасываем выделение
                 ed.mo._s |= 2; // Выделяем объект
             }
@@ -146,6 +148,7 @@ function Editor(storage, view, ctl)
         }, 
         leftup: function()           
         {
+            var items = storage.active;
             for(var x in items)
             {
                 var s = items[x]._s;
@@ -166,11 +169,13 @@ function Editor(storage, view, ctl)
     {
         move: function(x, y)
         {
+            if(x === selRect.x && y === selRect.y) return false; // во избежание излишних move
             ctl.go(selmove);
             return selmove.move(x, y)
         },
         leftup: function(mx, my)
         {
+            var items = storage.active;
             for(var x in items) if(items[x]._s & 2)
             {
                 if(items[x].onSel) items[x].onSel(0);

@@ -141,7 +141,6 @@ Arrow.prototype =
 {
     var pt = null, obj = null, Pt = Point, Arr = Arrow;
     storage.ctors["Arrow"] = Arr;
-    var items = storage.active;
     var onFreeMove = ctl.states.free.move;
 
     var nx =
@@ -174,13 +173,14 @@ Arrow.prototype =
             }
             else
             {
-                items.push(pt);
+                storage.active.push(pt);
                 pt = new Pt(x, y);
             }
             obj.ps.push(pt);
         },
         rightup: function(x, y)
         {
+            var items = storage.active;            
             obj.ps.pop();
             if(obj.ps.length > 1) items.push(obj);
             else items.pop();
@@ -198,7 +198,7 @@ Arrow.prototype =
         {
             var point, mo = editor.mo;
             if(editor.pointAlign && mo && mo.pos) point = mo; // Выбираем первую точку
-            else items.push(point = new Pt(x, y)); // или создаём
+            else storage.active.push(point = new Pt(x, y)); // или создаём
             pt = new Pt(x, y); // Создаём вторую точку
             obj = new Arr([point, pt]); // Создаём линию
             ctl.go(nx);

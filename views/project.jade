@@ -1,9 +1,9 @@
-extends parts/layout
+//extends parts/layout
 
-block content
-  //include menu
-  include parts/tabsbar
-  include parts/canvas
-  include parts/logobar
+//block content
+script(src='/js/project.js')
+include parts/tabsbar
+include parts/canvas
+  //include parts/logobar
   - for(var x in scripts)
     script(src=scripts[x])

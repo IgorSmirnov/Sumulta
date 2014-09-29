@@ -55,7 +55,13 @@ var schematic = new function(storage, ui)
 			Part.prototype = this;
 			storage.ctors["Part_" + this.names[0]] = Part; 
 		},
-		moveBy: function(dx, dy) { if(!(this._s & 4)) {this.x += dx; this.y += dy; this._mov = true;}},
+		moveBy: function(dx, dy) 
+		{ 
+			if(this._s & 4) return;
+			this.x += dx; 
+			this.y += dy; 
+			this._s |= 4;
+		},
 		draw: function(ctx, type)
 		{
 			var color = (type > 0 || (this._s & 2)) ? "#F00000" : "#800000";

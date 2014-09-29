@@ -1,14 +1,14 @@
 doctype html
-html(ng-app='project')
+html(ng-app='sumulta')
   head
-    title= title
+    title title
     link(rel='stylesheet', href='/css/graph.css')
     link(rel='stylesheet', href='/css/icons.css')
     link#css(rel='stylesheet', href='/css/lite.css')
-    block head
     script(src="/js/angular.js")
     script(src="/js/angular-route.min.js")
     script(src="/js/angular-resource.min.js")
-    script var user = {name:'#{user.name}', rights:'#{user.rights}'};
-  body
-    block content
+    script(src="/js/index.js")
+    //script var user = {name:'#{user.name}', rights:'#{user.rights}'};
+  body(ng-view)
+    //include parts/registration

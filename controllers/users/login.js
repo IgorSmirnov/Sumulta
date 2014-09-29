@@ -10,7 +10,7 @@ module.exports = function(req, res, next)
         if(user) req.logIn(user, function(err)
         {
             if(err) return next(err);
-            res.json({result: 'authorized'});
+            res.json({result: 'authorized', name: user.name, rights: user.rights});
         });
         else
         {

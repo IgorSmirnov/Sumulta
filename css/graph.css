@@ -40,6 +40,13 @@ canvas
     z-index: 5;
 }
 
+.top
+{
+    top: 0;
+    width: 100%;
+}
+
+
 .bottom
 {
     bottom: 0;
@@ -58,3 +65,7 @@ canvas
     display: inline-block;
 }
 
+@font-face {
+    font-family: unicons; /* Гарнитура шрифта */
+    src: url(/css/unicons.1.0.ttf); /* Путь к файлу со шрифтом */
+}

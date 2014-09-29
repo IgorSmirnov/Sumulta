@@ -106,7 +106,6 @@ Arc.prototype =
 (function(storage, ctl, editor, view)
 {
     var pt = null, obj = null, Pt = Point, ctor = Arc;
-    var items = storage.active;
     var onFreeMove = ctl.states.free.move;   
     storage.ctors["Arc"] = Arc;
 
@@ -133,6 +132,7 @@ Arc.prototype =
         leftup: function(x, y)
         {
             var point, mo = editor.mo;
+            var items = storage.active;
             if(editor.pointAlign && mo && mo.pos) 
             {
                 rfa(obj.p2._der, obj);
@@ -155,7 +155,7 @@ Arc.prototype =
         {
             var point, mo = editor.mo;
             if(editor.pointAlign && mo && mo.pos) point = mo; // Выбираем первую точку
-            else items.push(point = new Pt(x, y)); // или создаём
+            else storage.active.push(point = new Pt(x, y)); // или создаём
             pt = new Pt(x, y); // Создаём вторую точку
             obj = new ctor(point, pt); // Создаём линию
             ctl.go(nx);

@@ -16,6 +16,7 @@ module.exports = function()
 		for(var s in files)
 		{
 			if(files[s] === 'test.js') continue;
+			if(files[s].substr(files[s].length - 3) !== '.js') continue;
 			if(files[s] === 'index.js') index = path + files[s];
 			else result.push(path + files[s]);
 		}

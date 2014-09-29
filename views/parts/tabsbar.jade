@@ -1,14 +1,31 @@
-div.bottom.bar
-	button.small &#10133;
-	div.tab
-		input.text(type='text', value='file')
-		button.small &#10005;
-	div.tab.sel
-		input.text(type='text', value='file')
-		button.small &#10005;
-	div.tab
-		input.text(type='text', value='file')
-		button.small &#10005;
-	div.tab
-		input.text(type='text', value='file')
-		button.small &#10005;
+div.top.bar
+	//-(ng-controller="StorageCtl")
+	div
+		button.unicon(ng-click='clear("Новый лист")') 6
+		button.unicon#open 8
+		button.unicon(ng-click='import()') 9
+		div.unicon#params e
+	//- Вкладки:
+	script(src="/js/storage_ctl.js")
+	div
+		center(style='display:block')
+			div {{location.path()}}
+			input.text(type='text', value='project', ng-model='$routeParams.project')
+			button(ng-click='save(projectName)') Сохранить
+		div
+			div.tab(ng-repeat='sheet in sheets', ng-class='isSel(sheet) ? "sel" : ""', ng-click='select(sheet)')
+				input.text(type='text',ng-model='sheet.name',ng-disabled='!isSel(sheet)')
+				button.uniconsm(ng-click='removeSheet(sheet)') X
+			div.tab
+				button.uniconsm(ng-click='newSheet("Новый лист")') +
+	div(style='float:right', ng-controller='AuthCtl')
+		div(ng-show='!auth')
+			button.unicon(ng-click='show=!show') {{show ? "k" : "l"}}
+			div.popup
+				div(align='center')
+					input#loguser(type='edit', placeholder='логин', size='10')
+					input#logpass(type='password', placeholder='пароль', size='10')
+				div(align='center')
+					button(type='button', onclick='login()') Войти
+					button(type='button', onclick='show("reg")') Регистрация
+

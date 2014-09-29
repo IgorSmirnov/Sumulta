@@ -76,4 +76,4 @@ function Menu(ui, body) {
     ui.makeMenu = makeMenu;
 }
 
-Menu(ui);
+Menu(ui, byId('params'));

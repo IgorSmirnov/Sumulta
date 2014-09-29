@@ -1,29 +1,53 @@
-extends parts/layout
+//extends parts/layout
 
-block head
-	link(rel='stylesheet', href='/css/head.css')
+//block head
+link(rel='stylesheet', href='/css/head.css')
 
-block content
-	h1 SUMULTA
+//block content
+h1 SUMULTA
 	
-	div(class='right')
-		include parts/user
-	div(class='center')
+div(class='right')
+	include parts/user
+div(class='center')
+	div(class='group')
+		h1 Новости
+		div(id='news') загрузка ...
+	div(class='half')
 		div(class='group')
-			h1 Новости
-			div(id='news') загрузка ...
-		div(class='half')
-			div(class='group')
-				h1 Проекты
-				button(onclick='newProject()') Создать новый проект
-				div(id='projects') загрузка ...
-		div(class='half')
-			div(class='group')
-				h1 Пользователи
-				div(id='users') загрузка ...
+			h1 Проекты
+			table
+				thead
+					tr
+						th Имя
+						th Описание
+						th Автор
+				tbody
+					tr(ng-repeat="project in projects")
+						td
+							a(href="/{{project.owner}}/{{project.name}}") {{project.name}}
+						td {{project.desc}}
+						td
+							a(href="/{{project.owner}}") {{project.owner}}
 
-	script(src='js/lib.js')
-	script(src='js/head.js')
+					tr 
+						td
+							a(href="/user/Новый") Новый проект...
+						td
+						td
+	div(class='half')
+		div(class='group')
+			h1 Пользователи
+			table
+				thead
+					tr
+						th Имя
+						th Проектов
+				tbody
+					tr(ng-repeat="user in users")
+						td
+							a(href="/{{user.name}}") {{user.name}}
+						td
+//script(src='js/lib.js')
+//script(src='js/head.js')
 
-	include parts/registration
 	

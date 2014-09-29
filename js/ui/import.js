@@ -35,6 +35,7 @@ var imp = function Import(doc, ui) {
 		if(errors.length) alert(errors.join('\n'));
 	}
 	return function(ext, cb) {
+		if(!ext) return imp.click();
 		if(!imp) {
 			createImport();
 			ui('project/import', function() {imp.click();});

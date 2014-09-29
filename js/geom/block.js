@@ -143,7 +143,9 @@ Block.prototype =
     },
     moveBy: function(dx, dy)
     {
-        if(!(this._s & 4)) {this.x += dx; this.y += dy; for(var x in this._P) this._P[x]._s |= 4;};
+        if(this._s & 4) return;
+        this._s |= 4;
+        this.x += dx; this.y += dy; for(var x in this._P) this._P[x]._s |= 4;
     },
     setFontSize: function(ctx, s)
     {
@@ -240,7 +242,7 @@ Block.prototype =
 
 (function(storage, ctl, editor, view)
 {
-    var obj = null, ctor = Block, items = storage.active;
+    var obj = null, ctor = Block;
     var onFreeMove = ctl.states.free.move;
     storage.ctors["Block"] = ctor;
     var nx =
@@ -262,7 +264,7 @@ Block.prototype =
         {
             if(obj.w < 0) { obj.x += obj.w; obj.w = -obj.w;}
             if(obj.h < 0) { obj.y += obj.h; obj.h = -obj.h;}
-            items.push(obj);
+            storage.active.push(obj);
             ctl.pop();
         },
         rightup: function()

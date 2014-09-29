@@ -11,13 +11,15 @@ var passport     = require('passport');
 var users        = controllers.users;
 var render       = controllers.render;
 var rest         = controllers.rest;
+var stat         = controllers.stat;
 
 module.exports = function(app)
 {
     if(config.get('express:get_static'))
     {
-        app.use('/js/',  express.static('./js/'));
-        app.use('/css/', express.static('./css/'));
+        app.use('/js/',   express.static('./js/'));
+        app.use('/css/',  express.static('./css/'));
+        app.use('/html/', express.static('./views/'));
 
         app.use('/admin/test', express.static('./test/client'))
     }
@@ -30,32 +32,32 @@ module.exports = function(app)
     app.post  ('/admin/rebuild',       controllers.rebuild);
 
     // API 
-    app.post  ('/auth/register',       users.register);
-    app.post  ('/auth/login',          users.login);
-    app.post  ('/auth/logout',         users.must_auth, users.logout);
-    app.get   ('/auth/vk',             passport.authenticate('vkontakte'));
-    app.get   ('/auth/vkcb',           passport.authenticate('vkontakte', {failureRedirect: '/login'}),
+    app.get   ('/api/1/auth',                users.get_auth);
+    app.post  ('/api/1/auth/register',       users.register);
+    app.post  ('/api/1/auth/login',          users.login);
+    app.post  ('/api/1/auth/logout',         users.must_auth, users.logout);
+    app.get   ('/api/1/auth/vk',             passport.authenticate('vkontakte'));
+    app.get   ('/api/1/auth/vkcb',           passport.authenticate('vkontakte', {failureRedirect: '/login'}),
         function(req, res) { 
             log.info('success!!!');
             res.redirect('/');});
 
     // Пользовательские запросы
 
-
-    app.get   ('/news.json',                         rest.getlist('new'));    // Вернуть новости
-    app.get   ('/users.json',                        rest.getlist('user'));    // Вернуть список пользователей
-    app.get   ('/projects.json',                     rest.getlist('project'));    // Вернуть список проектов
-    app.get   ('/:owner/projects.json',              rest.getlist('project'));    // Вернуть проекты пользователя
-    app.get   ('/:owner/:name.json',                 rest.getitem('project')); // Вернуть проект 
-    app.put   ('/:owner/:name.json', /*users.must_own,*/ rest.putitem('project')); // Сохранить проект 
+    app.get   ('/api/1/news',                         rest.getlist('new'));    // Вернуть новости
+    app.get   ('/api/1/users',                        rest.getlist('user'));    // Вернуть список пользователей
+    app.get   ('/api/1/projects',                     rest.getlist('project'));    // Вернуть список проектов
+    app.get   ('/api/1/users/:owner/projects',        rest.getlist('project'));    // Вернуть проекты пользователя
+    app.get   ('/api/1/users/:owner/projects/:name',  rest.getitem('project')); // Вернуть проект 
+    app.put   ('/api/1/users/:owner/projects/:name', /*users.must_own,*/ rest.putitem('project')); // Сохранить проект 
 
     // Страницы сайта
 
-    app.get   ('/',                    render('head'));    // Главная страница
-    app.get   ('/:user',               render('user'));    // Cтраница пользователя
+    app.get   ('/',                    stat('views/index.html'));//render('head'));    // Главная страница
+    app.get   ('/:user',               stat('views/index.html'));//render('user'));    // Cтраница пользователя
   //app.get   ('/:user/:project',      render('project', {scripts: ['./js/core.js']})); // Страница проекта
-    app.get   ('/:user/:project',      render('project', {
-        scripts: controllers.readdir('./js/lib.js', './js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
+    app.get   ('/:user/:project',      stat('views/index.html'));//render('project', {
+        //scripts: controllers.readdir('./js/lib.js', './js/ui/', './js/lang/ru.js', './js/core/', './js/geom/')}));
 
     // Projects API
     app.get   ('/api/projects',       controllers.rest.getlist('project'));

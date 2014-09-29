@@ -1,22 +1,22 @@
-extends parts/layout
+//extends parts/layout
 
-block head
-	link(rel='stylesheet', href='/css/head.css')
+//-block head
+link(rel='stylesheet', href='/css/head.css')
 
-block content
-	h1 SUMULTA
+//block content
+h1 SUMULTA
 	
-	div(class='right') Hello, user
-	div(class='center')
-		div(class='group')
-			h1 Новости
-			div(id='news') загрузка ...
-		div(class='group')
-			h1 Твои проекты
-			button Создать новый проект
-			div(id='projects') загрузка ...
+div(class='right') Hello, user
+div(class='center')
+	div(class='group')
+		h1 Новости
+		div(id='news') загрузка ...
+	div(class='group')
+		h1 Твои проекты
+		button Создать новый проект
+		div(id='projects') загрузка ...
 
 
 
-	script(src='js/lib.js')
-	script(src='js/head.js')
+script(src='js/lib.js')
+script(src='js/head.js')
