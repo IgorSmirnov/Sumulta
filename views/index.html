@@ -1,1 +1,81 @@
-<!DOCTYPE html><html ng-app="sumulta"><head><title>title</title><link rel="stylesheet" href="/css/graph.css"><link rel="stylesheet" href="/css/icons.css"><link id="css" rel="stylesheet" href="/css/lite.css"><script src="/js/angular.js"></script><script src="/js/angular-route.min.js"></script><script src="/js/angular-resource.min.js"></script><script src="/js/index.js"></script><!--script var user = {name:'#{user.name}', rights:'#{user.rights}'};--></head><body ng-view></body></html>
+<!DOCTYPE html>
+<html ng-app="sumulta">
+  <head>
+    <title>title</title>
+    <link rel="stylesheet" href="/css/graph.css">
+    <link rel="stylesheet" href="/css/icons.css">
+    <link id="css" rel="stylesheet" href="/css/lite.css">
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-route.min.js"></script>
+    <script src="/js/angular-resource.min.js"></script>
+    <script src="/js/index.js"></script>
+    <!--script var user = {name:'#{user.name}', rights:'#{user.rights}'};-->
+  </head>
+  <body>
+    <div ng-view></div>
+    <script src="/js/ui/01_index.js"></script>
+    <script src="/js/ui/02_menu.js"></script>
+    <script src="/js/ui/03_toolbar.js"></script>
+    <script src="/js/ui/04_css.js"></script>
+    <script src="/js/lang/ru.js"></script>
+    <script src="/js/core/storage.js"></script>
+    <script src="/js/core/view.js"></script>
+    <script src="/js/core/controller.js"></script>
+    <script src="/js/core/editor.js"></script>
+    <script src="/js/core/grid.js"></script>
+    <script src="/js/core/navi.js"></script>
+    <script src="/js/core_ctl.js"></script>
+    <!--script(src="/js/core/index.js")-->
+    <script src="/js/geom/0_pnl.js"></script>
+    <script src="/js/geom/arcs.js"></script>
+    <script src="/js/geom/arrows.js"></script>
+    <script src="/js/geom/blocks.js"></script>
+    <div ng-controller="Auth" ng-show="auth" class="blocker">
+      <form name="loginForm" novalidate ng-if="auth==='login'" ng-submit="login(username, password)" class="group">
+        <h1>Вход</h1>
+        <div>
+          <div align="center">
+            <input type="edit" placeholder="логин" size="10" ng-model="username" required>
+            <input type="password" placeholder="пароль" size="10" ng-model="password" required>
+          </div>
+          <div align="center">
+            <input type="submit" value="Войти" ng-disabled="loginForm.$invalid" class="button">
+            <button type="button" ng-click="setAuth(&quot;reg&quot;)">Регистрация</button>
+            <button type="button" ng-click="setAuth()">Закрыть</button>
+          </div>
+        </div>
+      </form>
+      <form ng-if="user.auth">
+        <h1>Hello, <a>{{user.name}}</a></h1>
+        <button type="button" ng-click="logout()">Выйти</button>
+      </form>
+      <form name="regForm" ng-if="auth==='reg'" ng-submit="register(username, password)" class="group">
+        <h1>Регистрация</h1>
+        <table>
+          <tr>
+            <td>Введите логин</td>
+            <td>
+              <input type="text" name="un" size="10" ng-model="username" required>
+            </td>
+          </tr>
+          <tr>
+            <td>Введите пароль</td>
+            <td>
+              <input name="pass" type="password" size="10" ng-model="password" required>
+            </td>
+          </tr>
+          <tr>
+            <td>Повторите пароль</td>
+            <td>
+              <input type="password" size="10" ng-model="passcopy" required compare-to="regForm.pass">
+            </td>
+          </tr>
+        </table>
+        <div align="center">
+          <input type="submit" value="Зарегистрировать" class="button">
+          <button type="button" ng-click="setAuth()">Закрыть</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

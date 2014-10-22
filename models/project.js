@@ -10,12 +10,17 @@ var projectSchema = new mongoose.Schema(
         unique: true,
         required: true
     },
+    desc:
+    {
+        type: String,
+        required: false
+    },
     owner: {
         type: String,
         required: true
     },
-    content: {
-        type: String,
+    data: {
+        type: Object,
         required: true
     },
 });

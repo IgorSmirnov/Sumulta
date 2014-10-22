@@ -353,6 +353,14 @@ button:active {
     background: rgba(88, 88, 88, 0.5);
 }
 
+.blocker > form
+{
+    width: 40%;
+    top:20%;
+    margin: 50px auto;
+    /*vertical-align:50%;*/
+}
+
 /* Логобар */
 .topright.bar
 {

@@ -5,10 +5,12 @@ html(ng-app='sumulta')
     link(rel='stylesheet', href='/css/graph.css')
     link(rel='stylesheet', href='/css/icons.css')
     link#css(rel='stylesheet', href='/css/lite.css')
-    script(src="/js/angular.js")
+    script(src="/js/angular.min.js")
     script(src="/js/angular-route.min.js")
     script(src="/js/angular-resource.min.js")
     script(src="/js/index.js")
     //script var user = {name:'#{user.name}', rights:'#{user.rights}'};
-  body(ng-view)
-    //include parts/registration
+  body
+    div(ng-view)
+    include scripts/debug
+    include parts/auth

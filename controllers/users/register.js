@@ -28,7 +28,7 @@ module.exports = function(req, res, next)
         }
         else
         {
-            user = new User({name: username, hash: hash(username, pass)});
+            user = new User({name: username, hash: hash(username, pass), rights:""});
             user.save(function(err)
             {
                 if(err) return next(err);

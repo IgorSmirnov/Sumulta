@@ -1,0 +1,132 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'coffeescript' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose cache add [ 'coffeescript', null ]
+5 verbose cache add name=undefined spec="coffeescript" args=["coffeescript",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'coffeescript',
+6 verbose parsed url   path: 'coffeescript',
+6 verbose parsed url   href: 'coffeescript' }
+7 silly lockFile f5fbc02e-coffeescript coffeescript
+8 verbose lock coffeescript /home/igor/.npm/f5fbc02e-coffeescript.lock
+9 silly lockFile f5fbc02e-coffeescript coffeescript
+10 silly lockFile f5fbc02e-coffeescript coffeescript
+11 verbose addNamed [ 'coffeescript', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 62a8d146-coffeescript coffeescript@
+14 verbose lock coffeescript@ /home/igor/.npm/62a8d146-coffeescript.lock
+15 silly addNameRange { name: 'coffeescript', range: '*', hasData: false }
+16 verbose request where is /coffeescript
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id e60051e5901d81af
+19 verbose url raw /coffeescript
+20 verbose url resolving [ 'https://registry.npmjs.org/', './coffeescript' ]
+21 verbose url resolved https://registry.npmjs.org/coffeescript
+22 verbose request where is https://registry.npmjs.org/coffeescript
+23 info trying registry request attempt 1 at 21:17:44
+24 http GET https://registry.npmjs.org/coffeescript
+25 http 200 https://registry.npmjs.org/coffeescript
+26 silly registry.get cb [ 200,
+26 silly registry.get   { date: 'Mon, 20 Oct 2014 15:17:45 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     etag: '"EKPPI3VL1AS1AFVP62JKWNOZB"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     'content-length': '1522',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-served-by': 'cache-fra1246-FRA',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1413818265.108455,VS0,VE432',
+26 silly registry.get     vary: 'Accept',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly addNameRange number 2 { name: 'coffeescript', range: '*', hasData: true }
+28 silly addNameRange versions [ 'coffeescript', [ '99.999.9999', '99.999.99999' ] ]
+29 verbose addNamed [ 'coffeescript', '99.999.99999' ]
+30 verbose addNamed [ '99.999.99999', '99.999.99999' ]
+31 silly lockFile 504f0aef-coffeescript-99-999-99999 coffeescript@99.999.99999
+32 verbose lock coffeescript@99.999.99999 /home/igor/.npm/504f0aef-coffeescript-99-999-99999.lock
+33 warn deprecated coffeescript@99.999.99999: You misspelled 'coffee-script'
+34 silly lockFile 69a21f5c-pt-coffeescript-99-999-99999-tgz https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz
+35 verbose lock https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz /home/igor/.npm/69a21f5c-pt-coffeescript-99-999-99999-tgz.lock
+36 verbose addRemoteTarball [ 'https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz',
+36 verbose addRemoteTarball   '98f6a60410f827dcb06c067db5539c03c932ad75' ]
+37 info retry fetch attempt 1 at 21:17:45
+38 verbose fetch to= /tmp/npm-23983-PAT87B10/registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz
+39 http GET https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz
+40 http 200 https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz
+41 silly lockFile 69a21f5c-pt-coffeescript-99-999-99999-tgz https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz
+42 silly lockFile 69a21f5c-pt-coffeescript-99-999-99999-tgz https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz
+43 silly lockFile 504f0aef-coffeescript-99-999-99999 coffeescript@99.999.99999
+44 silly lockFile 504f0aef-coffeescript-99-999-99999 coffeescript@99.999.99999
+45 silly lockFile 62a8d146-coffeescript coffeescript@
+46 silly lockFile 62a8d146-coffeescript coffeescript@
+47 silly resolved [ { name: 'coffeescript',
+47 silly resolved     version: '99.999.99999',
+47 silly resolved     scripts: { preinstall: 'node super-evil-script-omg-for-reals.js' },
+47 silly resolved     _id: 'coffeescript@99.999.99999',
+47 silly resolved     dist:
+47 silly resolved      { shasum: '98f6a60410f827dcb06c067db5539c03c932ad75',
+47 silly resolved        tarball: 'http://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz' },
+47 silly resolved     _from: 'coffeescript@',
+47 silly resolved     _npmVersion: '1.4.4',
+47 silly resolved     _npmUser: { name: 'isaacs', email: 'i@izs.me' },
+47 silly resolved     maintainers: [ [Object] ],
+47 silly resolved     deprecated: 'You misspelled \'coffee-script\'',
+47 silly resolved     directories: {},
+47 silly resolved     _shasum: '98f6a60410f827dcb06c067db5539c03c932ad75',
+47 silly resolved     _resolved: 'https://registry.npmjs.org/coffeescript/-/coffeescript-99.999.99999.tgz' } ]
+48 info install coffeescript@99.999.99999 into /usr/local/lib
+49 info installOne coffeescript@99.999.99999
+50 verbose lib/node_modules/coffeescript unbuild
+51 verbose tar unpack /home/igor/.npm/coffeescript/99.999.99999/package.tgz
+52 silly lockFile d4272b28-al-lib-node-modules-coffeescript tar:///usr/local/lib/node_modules/coffeescript
+53 verbose lock tar:///usr/local/lib/node_modules/coffeescript /home/igor/.npm/d4272b28-al-lib-node-modules-coffeescript.lock
+54 silly lockFile 07d232cc-escript-99-999-99999-package-tgz tar:///home/igor/.npm/coffeescript/99.999.99999/package.tgz
+55 verbose lock tar:///home/igor/.npm/coffeescript/99.999.99999/package.tgz /home/igor/.npm/07d232cc-escript-99-999-99999-package-tgz.lock
+56 silly gunzTarPerm modes [ '775', '664' ]
+57 error Error: EACCES, mkdir '/usr/local/lib/node_modules/coffeescript'
+57 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/coffeescript']
+57 error   errno: 3,
+57 error   code: 'EACCES',
+57 error   path: '/usr/local/lib/node_modules/coffeescript',
+57 error   fstream_type: 'Directory',
+57 error   fstream_path: '/usr/local/lib/node_modules/coffeescript',
+57 error   fstream_class: 'DirWriter',
+57 error   fstream_stack:
+57 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+57 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+57 error      'Object.oncomplete (fs.js:107:15)' ] }
+58 error Please try running this command again as root/Administrator.
+59 error System Linux 3.13.0-32-generic
+60 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "coffeescript"
+61 error cwd /www/sumulta
+62 error node -v v0.10.32
+63 error npm -v 1.4.28
+64 error path /usr/local/lib/node_modules/coffeescript
+65 error fstream_path /usr/local/lib/node_modules/coffeescript
+66 error fstream_type Directory
+67 error fstream_class DirWriter
+68 error code EACCES
+69 error errno 3
+70 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/coffeescript'
+71 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+71 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+71 error fstream_stack Object.oncomplete (fs.js:107:15)
+72 verbose exit [ 3, true ]

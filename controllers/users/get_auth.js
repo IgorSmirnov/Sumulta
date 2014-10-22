@@ -8,7 +8,7 @@ module.exports = function(req, res, next)
     if(auth)
     { 
     	log.info('User', req.user.name, req.method, req.url);
-    	res.json({auth: true, name: req.user, rights: req.user.rights});
+    	res.json({auth: true, name: req.user.name, rights: req.user.rights});
     }
     else
     {

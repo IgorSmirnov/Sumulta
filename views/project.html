@@ -1,1 +1,46 @@
-<!--extends parts/layout--><!--block content--><script src="/js/project.js"></script><div class="top bar"><div><button ng-click="clear(&quot;Новый лист&quot;)" class="unicon">6</button><button id="open" class="unicon">8</button><button ng-click="import()" class="unicon">9</button><div id="params" class="unicon">e</div></div><script src="/js/storage_ctl.js"></script><div><center style="display:block"><div>{{location.path()}}</div><input type="text" value="project" ng-model="$routeParams.project" class="text"/><button ng-click="save(projectName)">Сохранить</button></center><div><div ng-repeat="sheet in sheets" ng-class="isSel(sheet) ? &quot;sel&quot; : &quot;&quot;" ng-click="select(sheet)" class="tab"><input type="text" ng-model="sheet.name" ng-disabled="!isSel(sheet)" class="text"/><button ng-click="removeSheet(sheet)" class="uniconsm">X</button></div><div class="tab"><button ng-click="newSheet(&quot;Новый лист&quot;)" class="uniconsm">+</button></div></div></div><div style="float:right" ng-controller="AuthCtl"><div ng-show="!auth"><button ng-click="show=!show" class="unicon">{{show ? "k" : "l"}}</button><div class="popup"><div align="center"><input id="loguser" type="edit" placeholder="логин" size="10"/><input id="logpass" type="password" placeholder="пароль" size="10"/></div><div align="center"><button type="button" onclick="login()">Войти</button><button type="button" onclick="show(&quot;reg&quot;)">Регистрация</button></div></div></div></div></div><!-- Канва--><div><canvas id="canvas">Обновите браузер<!--include parts/logobar--></canvas><canvas id="fast" style="z-index:2"></canvas></div>
+
+<!--extends parts/layout-->
+<!--block content-->
+<!--script(src='/js/project.js')-->
+<div ng-controller="StorageCtl" class="top bar">
+  <div>
+    <button ng-click="clear(&quot;Новый лист&quot;)" title="Создать новый проект" class="unicon">6</button>
+    <button title="Открыть проект" class="unicon">8</button>
+    <button ng-click="save($routeParams.project)" title="Сохранить проект" class="unicon">e</button>
+    <button ng-click="import()" title="Импорт файлов в проект" class="unicon">9</button>
+    <div id="params" class="unicon">=</div>
+  </div>
+  <div>
+    <center style="display:block">
+      <div>{{location.path()}}</div>
+      <input type="text" value="project" ng-model="$routeParams.project" class="text"/>
+    </center>
+    <div>
+      <div ng-repeat="sheet in sheets" ng-class="isSel(sheet) ? &quot;sel&quot; : &quot;&quot;" ng-click="select(sheet)" class="tab">
+        <input type="text" ng-model="sheet.name" ng-disabled="!isSel(sheet)" class="text"/>
+        <button ng-click="removeSheet(sheet)" class="uniconsm">X</button>
+      </div>
+      <div class="tab">
+        <button ng-click="newSheet(&quot;Новый лист&quot;)" class="uniconsm">+</button>
+      </div>
+    </div>
+  </div>
+  <div style="float:right" ng-controller="Auth">
+    <div ng-if="user.auth">
+      <div>Приветствую, {{user.name}}</div>
+      <button ng-click="logout()" title="Выйти" class="unicon">k</button>
+    </div>
+    <button ng-if="!user.auth" ng-click="setAuth(&quot;login&quot;)" title="Войти" class="unicon">l
+    </button>
+  </div>
+</div>
+<!-- Канва-->
+<div ng-controller="CoreCtl" ng-show="!!storage.active">
+  <canvas id="canvas">Обновите браузер</canvas>
+  <canvas id="fast" style="z-index:2"></canvas>
+</div>
+<!--include scripts/debug
+//include parts/logobar
+- for(var x in scripts)
+  script(src=scripts[x])
+-->

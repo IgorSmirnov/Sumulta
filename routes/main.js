@@ -31,6 +31,9 @@ module.exports = function(app)
 
     app.post  ('/admin/rebuild',       controllers.rebuild);
 
+
+    app.all   ('/api/1/*',              controllers.dump);
+
     // API 
     app.get   ('/api/1/auth',                users.get_auth);
     app.post  ('/api/1/auth/register',       users.register);
@@ -46,10 +49,10 @@ module.exports = function(app)
 
     app.get   ('/api/1/news',                         rest.getlist('new'));    // Вернуть новости
     app.get   ('/api/1/users',                        rest.getlist('user'));    // Вернуть список пользователей
-    app.get   ('/api/1/projects',                     rest.getlist('project'));    // Вернуть список проектов
+    app.get   ('/api/1/projects',                     rest.getlist('project', ['name', 'owner']));    // Вернуть список проектов
     app.get   ('/api/1/users/:owner/projects',        rest.getlist('project'));    // Вернуть проекты пользователя
-    app.get   ('/api/1/users/:owner/projects/:name',  rest.getitem('project')); // Вернуть проект 
-    app.put   ('/api/1/users/:owner/projects/:name', /*users.must_own,*/ rest.putitem('project')); // Сохранить проект 
+    app.get   ('/api/1/users/:owner/projects/:name',  rest.getitem('project', ['name', 'owner', 'data'])); // Вернуть проект 
+    app.put   ('/api/1/users/:owner/projects/:name', users.must_own, rest.putitem('project')); // Сохранить проект 
 
     // Страницы сайта
 

@@ -12,15 +12,18 @@ function Grid(view, editor)
         var x, os = 1 / view.scale;
         ctx.lineWidth = 0.2;
         var step = g.step;
+        var y0 = -view.offsetY * os, y1 = (h - view.offsetY) * os;
         for(x = Math.ceil(-view.offsetX / (step * view.scale)) * step; x * view.scale + view.offsetX < w; x += step)
         {
-            ctx.moveTo(x, -view.offsetY * os);
-            ctx.lineTo(x, (h - view.offsetY) * os);
+            ctx.moveTo(x, y0);
+            ctx.lineTo(x, y1);
         }
+        y0 = -view.offsetX * os;
+        y1 = (w - view.offsetX) * os;
         for(x = Math.ceil(-view.offsetY / (step * view.scale)) * step; x * view.scale + view.offsetY < h; x += step)
         {
-            ctx.moveTo(-view.offsetX * os, x);
-            ctx.lineTo((w - view.offsetX) * os, x);
+            ctx.moveTo(y0, x);
+            ctx.lineTo(y1, x);
         }
         ctx.strokeStyle = g.style;
         ctx.stroke();

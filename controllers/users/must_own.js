@@ -9,12 +9,16 @@ module.exports = function(req, res, next)
 	var auth = req.isAuthenticated();
     if(auth)
     { 
-    	log.info('User', req.user.name, req.method, req.url);
-    	next();
+        if(req.params.owner !== req.user.name)
+        {
+            log.info('Forbidden: User', req.user.name, 'try to', req.method, req.url);
+            res.status(403);
+            res.json({result:'forbidden'});
+        } else next();
     }
     else
     {
-    	res.statusCode = 401;
+    	res.status(401);
     	res.json({result:'unauthorized'});
     	log.warn('Unauthorized ' + req.method + ' to ' + req.url);
     } 

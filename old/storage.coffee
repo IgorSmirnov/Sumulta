@@ -1,12 +1,25 @@
+this.pd = (o, d) ->
+  o._der ? o._der.push d : (o._der = [d])
+
+this.rfa = (a, v) ->
+    o = 0
+    for t in a
+        a[o++] = t if t isnt v
+    a.length = o
+
 Storage = ->
     data = 
         sheets: [{name:"Новый лист", items:[]}]
     this.data = data
     this.active = data.sheets[0].items
+    data.active = 0;
     this.ctors = {}
     this.name = 'Проект'
     getItem  = (item, items) ->
-        return item.toJSON() if item.toJSON?
+        if item.toJSON?
+            return item.toJSON (o) ->
+                return o.getId() if o.getId? 
+                items.indexOf(o);
         result = _: item.ctor
         result[name] = field for own name, field of item
         if item.dep?
@@ -37,6 +50,18 @@ Storage = ->
             if c is '_' or c is '$'
                 undefined
             else value
+    this.putJSON = (json) ->
+        this.data = data = JSON.parse json
+        data.active = 0 if !data.active?
+        this.active = data.sheets[data.active].items
+        ctors = this.ctors
+        for sheet in data.sheets
+            for item in sheet.items
+                r = new ctors[item._]
+                for x, prop in item
+                    r[x] = prop if x isnt '_'
+                for d in r.dep if r.dep?
+                    
     this
 ###
         return JSON.stringify(data, function(key, value)

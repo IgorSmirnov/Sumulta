@@ -1,0 +1,33 @@
+
+<div class="top bar">
+  <div ng-controller="StorageCtl">
+    <button ng-click="clear(&quot;Новый лист&quot;)" class="unicon">6</button>
+    <button id="open" class="unicon">8</button>
+    <button ng-click="import()" class="unicon">9</button>
+    <div id="params" class="unicon">e</div>
+  </div>
+  <div ng-controller="StorageCtl">
+    <center style="display:block">
+      <div>{{location.path()}}</div>
+      <input type="text" value="project" ng-model="$routeParams.project" class="text"/>
+      <button ng-click="save($routeParams.project)">Сохранить</button>
+    </center>
+    <div>
+      <div ng-repeat="sheet in sheets" ng-class="isSel(sheet) ? &quot;sel&quot; : &quot;&quot;" ng-click="select(sheet)" class="tab">
+        <input type="text" ng-model="sheet.name" ng-disabled="!isSel(sheet)" class="text"/>
+        <button ng-click="removeSheet(sheet)" class="uniconsm">X</button>
+      </div>
+      <div class="tab">
+        <button ng-click="newSheet(&quot;Новый лист&quot;)" class="uniconsm">+</button>
+      </div>
+    </div>
+  </div>
+  <div style="float:right" ng-controller="Auth">
+    <div ng-if="user.auth">
+      <div>Приветствую, {{user.name}}</div>
+      <button ng-click="logout()" class="unicon">k</button>
+    </div>
+    <button ng-if="!user.auth" ng-click="setAuth(&quot;login&quot;)" class="unicon">l
+    </button>
+  </div>
+</div>

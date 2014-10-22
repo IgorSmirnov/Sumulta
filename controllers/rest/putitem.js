@@ -10,8 +10,11 @@ module.exports = function(model)
     var Model = mongoose.model(model);
     return function(req, res, next)
     {
-        var body = req.body;
-        Model.findOneAndUpdate(req.params, body, {upsert: true, new: false}, function(err, item)
+        var body = req.body, params = req.params;
+        //log.info('params:', req.params);
+        //log.info('body:', req.body);
+        //for(var x in params) body[x] = params[x];
+        Model.findOneAndUpdate(params, body, {upsert: true, new: false}, function(err, item)
         {
             if(err) return next(err);
             var result = item ? 'updated' : 'inserted';

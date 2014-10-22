@@ -1,0 +1,33 @@
+div.blocker(ng-controller="Auth" ng-show="auth")
+	form.group(name="loginForm" novalidate ng-if="auth==='login'" ng-submit='login(username, password)')
+		h1 Вход
+		div
+			div(align='center')
+				input(type='edit' placeholder='логин' size='10' ng-model="username" required)
+				input(type='password', placeholder='пароль', size='10', ng-model="password" required)
+			div(align='center')
+				input.button(type='submit' value="Войти" ng-disabled="loginForm.$invalid")
+				button(type='button' ng-click='setAuth("reg")') Регистрация
+				button(type='button', ng-click='setAuth()') Закрыть
+	form(ng-if='user.auth')
+		h1 Hello, 
+			a {{user.name}}
+		button(type='button', ng-click='logout()') Выйти
+	form.group(name="regForm" ng-if="auth==='reg'" ng-submit="register(username, password)")
+		h1 Регистрация
+		table
+			tr
+				td Введите логин
+				td
+					input(type='text' name="un" size='10' ng-model="username" required)
+			tr
+				td Введите пароль
+				td
+					input(name="pass" type='password' size='10' ng-model="password" required)
+			tr
+				td Повторите пароль
+				td
+					input(type='password' size='10' ng-model="passcopy" required compare-to="regForm.pass")
+		div(align='center')
+			input.button(type='submit' value='Зарегистрировать')
+			button(type='button', ng-click='setAuth()') Закрыть

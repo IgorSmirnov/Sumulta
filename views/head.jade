@@ -5,9 +5,14 @@ link(rel='stylesheet', href='/css/head.css')
 
 //block content
 h1 SUMULTA
-	
-div(class='right')
-	include parts/user
+//include parts/registration
+div.right(ng-controller="Auth")
+	button(ng-if="!user.auth" ng-click="setAuth('login')") Войти
+	button(ng-if="!user.auth" ng-click="setAuth('reg')") Зарегистрироваться
+	div(ng-if="user.auth")
+		div Приветствую, {{user.name}}
+		button(ng-click="logout()") Выйти
+	//include parts/user
 div(class='center')
 	div(class='group')
 		h1 Новости
@@ -22,7 +27,7 @@ div(class='center')
 						th Описание
 						th Автор
 				tbody
-					tr(ng-repeat="project in projects")
+					tr(ng-repeat="project in projects.items")
 						td
 							a(href="/{{project.owner}}/{{project.name}}") {{project.name}}
 						td {{project.desc}}
@@ -31,7 +36,7 @@ div(class='center')
 
 					tr 
 						td
-							a(href="/user/Новый") Новый проект...
+							a(href="/{{user.name}}/new") Новый проект...
 						td
 						td
 	div(class='half')
@@ -43,11 +48,10 @@ div(class='center')
 						th Имя
 						th Проектов
 				tbody
-					tr(ng-repeat="user in users")
+					tr(ng-repeat="user in users.items")
 						td
 							a(href="/{{user.name}}") {{user.name}}
 						td
-//script(src='js/lib.js')
-//script(src='js/head.js')
+
 
 	

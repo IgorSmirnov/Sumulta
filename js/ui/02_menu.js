@@ -1,5 +1,13 @@
 'use strict';
 
+function byId(id) { return document.getElementById(id);}
+
+function append(tag, parent) {
+    var r = document.createElement(tag);
+    (parent || document.body).appendChild(r);
+    return r;
+}
+
 function Menu(ui, body) {
     var menu = null, Item = ui.Item;
     ui.upds.push(function(i, name) {
@@ -75,5 +83,3 @@ function Menu(ui, body) {
     Item.prototype.makeMenu = makeMenu;
     ui.makeMenu = makeMenu;
 }
-
-Menu(ui, byId('params'));

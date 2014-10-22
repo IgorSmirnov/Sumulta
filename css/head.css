@@ -43,14 +43,6 @@ body > h1
 	margin-left: 0px;
 }
 
-#reg form
-{
-	width: 40%;
-	top:20%;
-	margin: 50px auto;
-	/*vertical-align:50%;*/
-}
-
 #reg td
 {
 	text-align:center;
@@ -59,4 +51,10 @@ body > h1
 #reg table
 {
 	margin: 5px auto;
+}
+
+input.ng-invalid.ng-dirty
+{
+	border-color: red;
+	box-shadow: 0px 0px 2px red;
 }
