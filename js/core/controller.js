@@ -58,18 +58,35 @@ function Controller(view, window)
         mouseDown = null;
     };
     canvas.addEventListener("touchend", function(evt) {onMouse(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY, state.leftup);});
-        
+
+    var time = 0;
+    var timer;
+    var dt = 50;
+
     canvas.onmousemove = function(evt) 
     {
-        onMouse(evt.pageX, evt.pageY, state.move);
+        function move()
+        {
+            onMouse(evt.pageX, evt.pageY, state.move);
+            time = Date.now() + dt;
+        }
+        clearTimeout(timer);
+        var dn = time - Date.now();
+        if(dn > 0) timer = setTimeout(move, dn);
+        else move();
     };
         
-    var time = 0;
     canvas.addEventListener("touchmove", function(evt)
     {
-        if(+new Date() < time) return;
-        onMouse(evt.touches[0].pageX, evt.touches[0].pageY, state.move);
-        time = +new Date() + 100;
+        function move()
+        {
+            onMouse(evt.touches[0].pageX, evt.touches[0].pageY, state.move);
+            time = Date.now() + dt;
+        }
+        clearTimeout(timer);
+        var dn = time - Date.now();
+        if(dn > 0) timer = setTimeout(move, dn);
+        else move();
     });
     canvas.ondblclick = function(evt) {onMouse(evt.pageX, evt.pageY, state.dblclick); evt.preventDefault();};
     function onMouseWheel(evt)
